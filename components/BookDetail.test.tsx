@@ -1,0 +1,163 @@
+import { describe, it, expect } from "vitest";
+import { renderToStaticMarkup } from "react-dom/server";
+import { BookDetail } from "./BookDetail";
+import type { Book } from "@/lib/books/types";
+
+function buku(ubah: Partial<Book> = {}): Book {
+  return {
+    id: "11111111-1111-1111-1111-111111111111",
+    title: "Filsafat Ilmu",
+    slug: "filsafat-ilmu",
+    author: "Dr. Siti",
+    synopsis: "Buku tentang dasar-dasar filsafat ilmu.",
+    publisherInfo: "CV Cipta Manuskrip Media",
+    bookInfo: null,
+    coverPath: "covers/uji.webp",
+    status: "published",
+    estimatedRelease: null,
+    isbn: "978-602-1234-56-7",
+    pricePrint: 85000,
+    priceEbook: 45000,
+    createdAt: new Date("2026-01-01T00:00:00Z"),
+    updatedAt: new Date("2026-01-01T00:00:00Z"),
+    ...ubah,
+  };
+}
+
+describe("BookDetail — buku telah terbit", () => {
+  const html = renderToStaticMarkup(<BookDetail book={buku()} />);
+
+  it("menampilkan judul, penulis, sinopsis, dan informasi penerbit", () => {
+    expect(html).toContain("Filsafat Ilmu");
+    expect(html).toContain("Dr. Siti");
+    expect(html).toContain("Buku tentang dasar-dasar filsafat ilmu.");
+    expect(html).toContain("CV Cipta Manuskrip Media");
+  });
+
+  it("menautkan pemesanan buku cetak ke nomor dan pesan yang ditentukan brief", () => {
+    expect(html).toContain(
+      'href="https://wa.me/6289671894900?text=Mau%20pesan%20buku%20cetak%20judul%20%22Filsafat%20Ilmu%22"'
+    );
+  });
+
+  it("menautkan sewa ebook dengan penulisan ebook yang dipertahankan", () => {
+    expect(html).toContain(
+      'href="https://wa.me/6289671894900?text=Mau%20sewa%20ebook%20judul%20%22Filsafat%20Ilmu%22"'
+    );
+  });
+
+  it("membuka tautan WhatsApp di tab baru tanpa membocorkan referrer", () => {
+    const tautan = html.match(/<a[^>]+wa\.me[^>]*>/g) ?? [];
+    expect(tautan).toHaveLength(2);
+    for (const a of tautan) {
+      expect(a).toContain('target="_blank"');
+      expect(a).toContain('rel="noopener noreferrer"');
+    }
+  });
+
+  it("menampilkan sampul dengan alt text dari judul buku", () => {
+    expect(html).toContain('src="/covers/uji.webp"');
+    expect(html).toContain('alt="Sampul buku Filsafat Ilmu"');
+  });
+});
+
+describe("BookDetail — ISBN dan harga", () => {
+  const html = renderToStaticMarkup(<BookDetail book={buku()} />);
+
+  it("menampilkan ISBN dan kedua harga dalam format rupiah", () => {
+    expect(html).toContain("978-602-1234-56-7");
+    expect(html).toContain("Harga buku cetak");
+    expect(html).toContain("Rp85.000");
+    expect(html).toContain("Sewa ebook");
+    expect(html).toContain("Rp45.000");
+  });
+
+  it("menampilkan tanda hubung untuk data yang belum ditetapkan", () => {
+    const kosong = renderToStaticMarkup(
+      <BookDetail book={buku({ isbn: null, pricePrint: null, priceEbook: null })} />
+    );
+    // Satu untuk ISBN, dua untuk harga.
+    expect((kosong.match(/>-</g) ?? []).length).toBe(3);
+    expect(kosong).not.toContain("Rp0");
+  });
+});
+
+describe("BookDetail — buku segera terbit", () => {
+  const html = renderToStaticMarkup(
+    <BookDetail
+      book={buku({
+        status: "upcoming",
+        synopsis: null,
+        bookInfo: "Segera hadir dalam rangkaian buku kepenulisan.",
+        estimatedRelease: "Januari 2027",
+      })}
+    />
+  );
+
+  it("menampilkan informasi buku dan estimasi terbit", () => {
+    expect(html).toContain("Segera hadir dalam rangkaian buku kepenulisan.");
+    expect(html).toContain("Januari 2027");
+  });
+
+  it("tidak menawarkan pesanan maupun pendaftaran notifikasi", () => {
+    expect(html).not.toContain("wa.me");
+    expect(html.toLowerCase()).not.toContain("notifikasi");
+    expect(html.toLowerCase()).not.toContain("beritahu saya");
+  });
+});
+
+describe("BookDetail — judul dengan karakter khusus", () => {
+  it("meng-encode judul ber-apostrof dan ampersand pada tautan WhatsApp", () => {
+    const html = renderToStaticMarkup(
+      <BookDetail book={buku({ title: "Kiat Menulis Cepat & Efektif (Edisi 2+1)" })} />
+    );
+
+    const cocok = html.match(/https:\/\/wa\.me\/[^"]+/g) ?? [];
+    expect(cocok).toHaveLength(2);
+
+    for (const raw of cocok) {
+      const pesan = decodeURIComponent(
+        new URL(raw.replace(/&amp;/g, "&")).searchParams.get("text") ?? ""
+      );
+      expect(pesan).toContain("Kiat Menulis Cepat & Efektif (Edisi 2+1)");
+    }
+  });
+});
+
+describe("BookDetail — §6 spesifikasi & badge", () => {
+  const LABEL = ["Format Buku", "Jenis Buku", "Bahasa", "Ukuran Buku"];
+
+  it("§6.1 empat spesifikasi tampil pada buku terbit", () => {
+    const html = renderToStaticMarkup(<BookDetail book={buku()} />);
+    for (const l of LABEL) expect(html).toContain(l);
+    expect(html).toContain("Buku Cetak &amp; E-Book");
+    expect(html).toContain("Bahasa Indonesia");
+    expect(html).not.toContain("detail-coming-badge");
+  });
+
+  it("§6.1 empat spesifikasi juga tampil pada buku segera terbit", () => {
+    const html = renderToStaticMarkup(<BookDetail book={buku({ status: "upcoming" })} />);
+    for (const l of LABEL) expect(html).toContain(l);
+    expect(html).toContain("UNESCO 15.5 x 23 cm");
+  });
+
+  it("§6.1 field per buku mengalahkan nilai standar bila tersedia", () => {
+    const html = renderToStaticMarkup(
+      <BookDetail book={buku({ formatBuku: "E-Book", jenisBuku: "Monograf", bahasa: "Bahasa Jawa", ukuranBuku: "A5 14.8 x 21 cm" })} />
+    );
+    expect(html).toContain("E-Book");
+    expect(html).toContain("Monograf");
+    expect(html).toContain("Bahasa Jawa");
+    expect(html).toContain("A5 14.8 x 21 cm");
+  });
+
+  it("§6.2 badge SEGERA TERBIT hanya untuk status upcoming", () => {
+    const upcoming = renderToStaticMarkup(<BookDetail book={buku({ status: "upcoming" })} />);
+    expect(upcoming).toContain("detail-coming-badge");
+    expect(upcoming).toContain("SEGERA TERBIT");
+    expect(upcoming).toContain("Buku ini akan segera hadir. Pantau terus untuk mendapatkan akses saat sudah diterbitkan.");
+    expect(upcoming).toContain("detail-coming-badge__jam");
+    const published = renderToStaticMarkup(<BookDetail book={buku()} />);
+    expect(published).not.toContain("detail-coming-badge");
+  });
+});

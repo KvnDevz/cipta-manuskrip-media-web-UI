@@ -1,0 +1,68 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+Thumbs.db
+*.pem
+*.pdf
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# kredensial lokal
+.env.local
+.env*.local
+
+# sampul yang diunggah admin — data berjalan, bukan bagian dari kode.
+# Folder uji (*-uji*) juga tercakup oleh pola ini.
+/storage/
+
+# Konfigurasi agen AI lokal. Isinya hook dan path absolut mesin ini
+# (C:\Users\ocako\...), jadi tidak ada gunanya — dan justru membocorkan
+# struktur folder lokal — kalau ikut ke repo klien.
+.claude/
+.agent/
+.agents/
+.gemini/
+skills-lock.json
+
+# Status kerja skill desain Impeccable: sama seperti di atas, isinya state
+# lokal mesin ini (susunan berkas yang sedang disunting), bukan bagian kode.
+.impeccable/
+
+# Scratch agen AI di Arena (screenshot & skrip verifikasi lokal), bukan bagian kode.
+.arena/

@@ -1,0 +1,172 @@
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+/**
+ * Batas body Server Action.
+ *
+ * Bawaan Next.js 1 MB, sementara brief mengizinkan sampul sampai 5 MB
+ * (`COVER_MAX_BYTES`). Tanpa dinaikkan, unggahan sah mana pun di atas 1 MB
+ * ditolak framework dengan 413 sebelum kode aplikasi sempat berjalan, dan
+ * admin melihat kegagalan tanpa pesan yang bisa ditindaklanjuti.
+ *
+ * Nilainya environment variable supaya bisa diturunkan di lingkungan yang
+ * tidak menerima unggahan besar, tanpa menyentuh kode. Sisanya 1 MB di atas
+ * batas bawaan sampul adalah ruang untuk overhead multipart — batas ini
+ * berlaku pada body HTTP mentah, termasuk boundary dan header tiap bagian.
+ */
+const batasSampul = Number(process.env.COVER_MAX_BYTES ?? "") || 5 * 1024 * 1024;
+
+/**
+ * `SizeLimit` Next.js bertipe template literal (`${number}mb`), bukan
+ * `string`, jadi bentuknya ditegaskan lewat JSDoc, bukan cast di pemakaian.
+ *
+ * @type {`${number}mb`}
+ */
+const batasBodyAksi = `${Math.ceil((batasSampul + 1024 * 1024) / (1024 * 1024))}mb`;
+
+/**
+ * Id build yang stabil.
+ *
+ * `.next` boleh dipakai ulang antar-build, tetapi build baru menimpa isinya.
+ * Mengunci id ke hash `package-lock.json` membuat dua proses yang berbagi
+ * folder (mis. build ulang di hosting saat server lama masih hidup) tidak
+ * menghasilkan id berbeda untuk kode yang sama — klien lama tidak dipaksa
+ * memuat ulang seluruh aset.
+ *
+ * `process.cwd()` dipakai karena `next build` dan `next start` selalu
+ * dijalankan dari folder aplikasi, yaitu folder yang berisi berkas ini.
+ *
+ * @returns {string}
+ */
+function idBuild() {
+  const pkg = readFileSync(join(process.cwd(), "package-lock.json"));
+  return createHash("sha256").update(pkg).digest("hex").slice(0, 16);
+}
+
+/**
+ * Konfigurasi Next.js.
+ *
+ * Berkas ini sengaja berformat `.mjs`, bukan `.ts`. Next hanya men-transpilasi
+ * `next.config.ts` lewat SWC sebelum menjalankannya; di server hosting, SWC
+ * native gagal dimuat (glibc lebih tua dari 2.29) dan Next jatuh ke SWC WASM.
+ * Pada jalur itu build gagal dengan `ERR_MODULE_NOT_FOUND` yang menunjuk ke
+ * `<hash>.next.config` — berkas yang tidak pernah ada. Berkas `.mjs` tidak
+ * melewati jalur transpilasi sama sekali, sehingga masalah itu tidak bisa
+ * terjadi. Tipe tetap terjaga lewat JSDoc di bawah.
+ *
+ * @type {import("next").NextConfig}
+ */
+const nextConfig = {
+  // Wajib false: dengan `cacheComponents` aktif (default di 16.4.2),
+  // route segment config ditolak saat build dan halaman yang membaca
+  // database gagal di-prerender. `partialPrefetching` juga harus hilang —
+  // ia menuntut `cacheComponents` menyala.
+  cacheComponents: false,
+
+  generateBuildId: idBuild,
+
+  /**
+   * Penanda dev (lingkaran "N" di pojok kiri bawah) disembunyikan.
+   *
+   * Halaman ini dipakai sebagai pratinjau desain; penanda tersebut menutupi
+   * sudut konten dan mudah disalahartikan sebagai tombol yang rusak.
+   */
+  devIndicators: false,
+
+  /**
+   * Origin yang boleh memuat aset pengembangan.
+   *
+   * Next 16 memblokir permintaan ke resource dev (`/_next/hmr`, dsb.) dari
+   * origin yang tidak terdaftar. Pratinjau berjalan di domain proxy
+   * platform, bukan localhost, jadi tanpa daftar ini konsol dipenuhi
+   * peringatan "Blocked cross-origin request" dan hot reload tidak jalan.
+   * Tidak berpengaruh pada build produksi.
+   */
+  // Pola `**` juga disertakan: sebagian proxy pratinjau meneruskan Origin
+  // induk (iframe) untuk koneksi HMR, bukan host pratinjau itu sendiri.
+  // Semua entri ini hanya berlaku di mode dev.
+  allowedDevOrigins: [
+    "127.0.0.1", "localhost",
+    "*.e2b.app", "**.e2b.app",
+    "arena.ai", "*.arena.ai", "**.arena.ai",
+  ],
+
+  experimental: {
+    serverActions: {
+      bodySizeLimit: batasBodyAksi,
+    },
+  },
+
+  /**
+   * Halaman HTML tidak boleh di-cache panjang.
+   *
+   * Next.js menyajikan halaman hasil prerender dengan
+   * `Cache-Control: s-maxage=31536000` — satu tahun. Peramban mengabaikan
+   * `s-maxage`, tetapi proxy/CDN di depan aplikasi mematuhinya, dan itu
+   * berbahaya untuk dokumen HTML: HTML memuat hash berkas CSS/JS. Begitu
+   * build baru terbit, HTML lama yang masih tersimpan di cache akan terus
+   * menunjuk aset lama, sementara peramban sudah menyimpan aset itu dengan
+   * `immutable` setahun. Hasilnya halaman terus menampilkan versi lama
+   * meski server sudah menyajikan yang baru — persis yang terjadi saat
+   * pratinjau tidak mau berubah setelah reload.
+   *
+   * Aset di `/_next/static` tidak terpengaruh aturan ini; namanya berisi
+   * hash isi, jadi tetap aman di-cache selamanya.
+   */
+  async headers() {
+    const aturan = [
+      {
+        source: "/:path((?!_next/static|_next/image|covers).*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, s-maxage=0, must-revalidate",
+          },
+          // Dua header berikut tidak standar, tetapi dihormati oleh sebagian
+          // CDN/proxy dan memberi jalan keluar bila Cache-Control di atas
+          // diabaikan karena entri lama sudah tersimpan.
+          { key: "CDN-Cache-Control", value: "no-store" },
+          { key: "Surrogate-Control", value: "no-store" },
+        ],
+      },
+    ];
+
+    /**
+     * KHUSUS MODE DEV — perbaikan CSS yang "tidak ke-load" di pratinjau.
+     *
+     * Turbopack memberi nama chunk CSS yang STABIL
+     * (`app_globals_css_<hash>.css`) dan hash itu tidak berubah saat isi
+     * `globals.css` disunting. Peramban maupun proxy pratinjau Arena bisa
+     * menyimpan salinan lama di URL yang sama, sehingga aturan baru (marquee,
+     * orbit, dll.) tidak pernah tampil meski server sudah menyajikan CSS
+     * terbaru. Paksa aset CSS dev untuk selalu diambil ulang.
+     *
+     * Tidak berlaku di produksi: di sana nama berkas CSS sudah ber-hash isi
+     * dan justru harus di-cache agresif.
+     */
+    if (process.env.NODE_ENV !== "production") {
+      aturan.unshift({
+        source: "/_next/static/chunks/:file",
+        headers: [
+          { key: "Cache-Control", value: "no-store, max-age=0" },
+          { key: "CDN-Cache-Control", value: "no-store" },
+          { key: "Surrogate-Control", value: "no-store" },
+        ],
+      });
+    }
+
+    return aturan;
+  },
+
+  turbopack: {
+    rules: {
+      "*.css": {
+        loaders: ["@tailwindcss/turbopack"],
+        as: "*.css",
+      },
+    },
+  },
+};
+
+export default nextConfig;

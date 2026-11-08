@@ -1,0 +1,16 @@
+# Konfigurasi build untuk platform berbasis Nixpacks (Railway, Coolify,
+# Dokploy, dan sejenisnya). Berkas ini HARUS berada di akar repo.
+#
+# PENTING: Root Directory / Build Context di panel juga harus akar repo.
+# `package.json` ada di sini, bukan di dalam folder `app/` (yang sekarang
+# hanya berisi route Next.js). Salah mengisi Root Directory ke `app` akan
+# menghasilkan "ERROR: package.json file not found" sebelum install dimulai.
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "sh -c \"npm run start -- -p ${PORT:-3000}\""

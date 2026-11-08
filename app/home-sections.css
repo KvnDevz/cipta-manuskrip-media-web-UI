@@ -1,0 +1,1495 @@
+/* ==========================================================================
+   CSS UNTUK SECTION BERANDA BARU (marquee SINTA + Section 2.2)
+   --------------------------------------------------------------------------
+   Sengaja dipisah dari globals.css agar Turbopack menerbitkan URL chunk
+   yang BERBEDA. Pratinjau/peramban yang masih menyimpan salinan lama dari
+   app_globals_css_*.css tidak punya entri cache untuk URL ini, sehingga
+   aturan baru pasti termuat. Ditunjang header no-store di next.config.mjs
+   untuk mencegah kejadian serupa pada penyuntingan berikutnya.
+   ========================================================================== */
+
+/* ==========================================================================
+   MARQUEE LOGO INDEKS — placeholder SINTA, tepat di bawah hero
+   --------------------------------------------------------------------------
+   Animasi memakai `@keyframes cmm-marquee` yang sudah ada di berkas ini:
+   dua grup identik digeser -50% sehingga gulirnya tidak pernah berhenti.
+   ========================================================================== */
+
+.logo-marquee {
+  width: min(1120px, calc(100% - 48px));
+  margin: 14px auto 0;
+  padding: 4px 0 2px;
+}
+
+.logo-marquee-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
+  padding: 0 6px 12px;
+}
+
+.logo-marquee-judul {
+  margin: 0;
+  color: #102a31;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.logo-marquee-catatan {
+  margin: 0;
+  color: #5f7075;
+  font-size: 12.5px;
+}
+
+.logo-marquee-viewport {
+  overflow: hidden;
+  /* Memudar di kedua tepi supaya kartu tidak terasa "kepotong". */
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.logo-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: cmm-marquee 40s linear infinite;
+  will-change: transform;
+}
+
+.logo-marquee-viewport:hover .logo-marquee-track,
+.logo-marquee-viewport:focus-within .logo-marquee-track {
+  animation-play-state: paused;
+}
+
+.logo-marquee-group {
+  display: flex;
+  gap: 12px;
+  /* Padding ini membuat jarak antar dua grup sama dengan jarak antar kartu,
+     sehingga geseran -50% benar-benar mulus tanpa lonjakan. */
+  padding-right: 12px;
+  margin: 0;
+  list-style: none;
+}
+
+.logo-marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 186px;
+  padding: 11px 15px;
+  border: 1px dashed rgba(16, 42, 49, 0.2);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.logo-marquee-bingkai {
+  display: grid;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px dashed rgba(9, 103, 125, 0.34);
+  border-radius: 11px;
+  background: rgba(9, 103, 125, 0.05);
+  color: #09677d;
+}
+
+.logo-marquee-teks strong {
+  display: block;
+  color: #102a31;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.logo-marquee-teks small {
+  display: block;
+  margin-top: 2px;
+  color: #7c8b8d;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Kerangka muat: tinggi sama dengan strip aslinya, tanpa animasi. */
+.home-skeleton-marquee {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.home-skeleton-marquee-track {
+  display: flex;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.home-skeleton-marquee-track .skeleton-cover {
+  flex: 0 0 170px;
+}
+
+@media (max-width: 700px) {
+  .logo-marquee {
+    width: calc(100% - 20px);
+    margin-top: 10px;
+  }
+
+  .logo-marquee-judul {
+    font-size: 12px;
+  }
+
+  .logo-marquee-catatan {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .logo-marquee-item {
+    min-width: 158px;
+    padding: 9px 12px;
+  }
+
+  .logo-marquee-bingkai {
+    flex-basis: 32px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo-marquee-teks strong {
+    font-size: 14px;
+  }
+
+  .logo-marquee-track {
+    animation-duration: 28s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee-track {
+    animation: none;
+  }
+
+  .logo-marquee-viewport {
+    overflow-x: auto;
+  }
+}
+
+@media print {
+  .logo-marquee {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   "Mengapa Memilih Penerbit Cipta Manuskrip Media?"
+   Komponen lama dipakai kembali setelah asistensi di /publish-buku.
+   Desain empat kartu pilar kepercayaan tetap dipertahankan.
+   ========================================================================== */
+
+.publish-trust {
+  margin-top: 82px;
+}
+
+.publish-trust .trust-pillars {
+  padding-bottom: 0;
+}
+
+.trust-pillars .section-heading {
+  align-items: flex-end;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.trust-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 22px 22px 24px;
+  border: 1px solid #e1e9e3;
+  border-radius: 20px;
+  background: linear-gradient(155deg, #ffffff 0%, #fbfdfb 58%, #f5faf7 100%);
+  box-shadow: 0 10px 30px rgba(16, 42, 49, 0.045);
+}
+
+.trust-card::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, #09677d, #c2cc08);
+  content: "";
+  opacity: 0.85;
+}
+
+.trust-card:nth-child(even)::before {
+  background: linear-gradient(90deg, #d4a346, #09677d);
+}
+
+.trust-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trust-nomor {
+  color: #8a6d2c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.trust-card-cek {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid rgba(9, 103, 125, 0.16);
+  border-radius: 50%;
+  background: rgba(9, 103, 125, 0.06);
+  color: #09677d;
+}
+
+/* --- Area visual: dua pertama placeholder logo resmi, dua lainnya ikon --- */
+
+.trust-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 126px;
+  margin-top: 16px;
+  padding: 16px 14px 28px;
+  border: 1px dashed rgba(16, 42, 49, 0.2);
+  border-radius: 15px;
+}
+
+.trust-visual--legalitas {
+  background: radial-gradient(ellipse at 50% 40%, rgba(9, 103, 125, 0.1), transparent 70%);
+}
+
+.trust-visual--isbn {
+  background: radial-gradient(ellipse at 50% 40%, rgba(212, 163, 70, 0.13), transparent 70%);
+}
+
+.trust-visual--naskah {
+  background: radial-gradient(ellipse at 50% 40%, rgba(194, 204, 8, 0.1), transparent 70%);
+}
+
+.trust-visual--distribusi {
+  background: radial-gradient(ellipse at 50% 40%, rgba(9, 103, 125, 0.09), transparent 70%);
+}
+
+.trust-segel {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 2px dashed rgba(9, 103, 125, 0.42);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 7px rgba(9, 103, 125, 0.06);
+  color: #09677d;
+}
+
+.trust-ikon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(16, 42, 49, 0.14);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 6px 16px rgba(16, 42, 49, 0.06);
+  color: #09677d;
+}
+
+.trust-barcode {
+  width: 94px;
+  height: 42px;
+  border: 1px solid rgba(16, 42, 49, 0.12);
+  border-radius: 4px;
+  background-color: #fff;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #102a31 0 2px, transparent 2px 4px,
+    #102a31 4px 5px, transparent 5px 9px
+  );
+  opacity: 0.55;
+}
+
+.trust-penghubung {
+  width: 26px;
+  border-top: 1px dashed rgba(16, 42, 49, 0.34);
+}
+
+.trust-visual-caption {
+  position: absolute;
+  right: 10px;
+  bottom: 9px;
+  left: 10px;
+  color: #7c8b8d;
+  font-size: 9.5px;
+  letter-spacing: 0.055em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.trust-card-judul {
+  margin: 20px 0 0;
+  color: #102a31;
+  font-size: 21px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.trust-card-deskripsi {
+  margin: 9px 0 0;
+  color: #475c5c;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.trust-catatan {
+  margin: 16px 0 0;
+  color: #7c8b8d;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.home-skeleton-trust {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 700px) {
+  .publish-trust {
+    margin-top: 58px;
+  }
+
+  .trust-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    margin-top: 26px;
+  }
+
+  .trust-card {
+    padding: 19px 18px 21px;
+  }
+
+  .trust-card-judul {
+    font-size: 20px;
+  }
+
+  .trust-card-deskripsi {
+    font-size: 14.5px;
+  }
+}
+
+@media (max-width: 390px) {
+  .trust-visual {
+    gap: 9px;
+  }
+
+  .trust-visual-caption {
+    font-size: 8.5px;
+  }
+}
+/* ==========================================================================
+   BUKU 3D DUA LAPIS DI DALAM MAIN BANNER HERO + 2 SLOT LOGO
+   --------------------------------------------------------------------------
+   Klien meminta buku dipindah dari section mandiri ke hero "Publikasi
+   Semudah Beli Kopi". Kolom tengah hero dirapatkan jaraknya supaya buku
+   muat tanpa membuat banner terlalu tinggi; kartu foto kiri/kanan tetap.
+   ========================================================================== */
+
+/* --- Penyesuaian kolom tengah hero -------------------------------------- */
+
+.home-hero--foto .hero-copy {
+  justify-content: flex-start;
+  padding-top: 18px;
+  padding-bottom: 8px;
+}
+
+.home-hero--foto .hero-title { margin-top: 14px; }
+.home-hero--foto .hero-description { margin-top: 10px; }
+.home-hero--foto .hero-actions { margin-top: 16px; }
+.home-hero--foto .scroll-cue { margin-top: 2px; }
+
+/* Buku diskala lewat transform, jadi susunan internalnya tetap presisi.
+   Animasi mengambang dipindah ke pembungkus agar tidak menimpa scale. */
+.hero-buku {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 362px;
+  margin-top: 10px;
+  place-items: start center;
+  animation: cmm-float 7s ease-in-out infinite;
+}
+
+.hero-buku .buku3d {
+  transform: scale(0.9);
+  transform-origin: top center;
+  animation: none;
+}
+
+/* --- Dua lapis buku ------------------------------------------------------ */
+
+.buku3d {
+  position: relative;
+  width: min(100%, 350px);
+  height: 390px;
+  perspective: 1000px;
+}
+
+.buku3d__glow {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 270px;
+  height: 108px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(194, 204, 8, 0.14);
+  filter: blur(30px);
+}
+
+.buku3d__belakang {
+  position: absolute;
+  top: 11%;
+  left: 5%;
+  width: 218px;
+  height: 308px;
+  border-radius: 5px 12px 12px 5px;
+  background: linear-gradient(135deg, #d9ba70, #b8934a 58%, #a17f3a);
+  box-shadow: 16px 22px 34px rgba(16, 42, 49, 0.18);
+  transform: rotate(-9deg);
+}
+
+.buku3d__punggung {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 21px;
+  border-radius: 5px 0 0 5px;
+  background: linear-gradient(90deg, #87672f, #c5a45f);
+}
+
+.buku3d__garis {
+  position: absolute;
+  right: 16px;
+  left: 32px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.buku3d__garis--atas { top: 58px; }
+.buku3d__garis--bawah { bottom: 58px; }
+
+.buku3d__depan {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 3%;
+  width: 218px;
+  height: 330px;
+  padding: 15px;
+  border: 1px solid #d4a346;
+  border-radius: 4px 12px 12px 4px;
+  background: linear-gradient(160deg, #fffef9, #fbf7e9);
+  box-shadow: 14px 20px 34px rgba(16, 42, 49, 0.2);
+  transform: rotate(4deg);
+}
+
+.buku3d__bingkai {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 10px 12px;
+  border: 1px solid rgba(9, 103, 125, 0.55);
+}
+
+.buku3d__merek {
+  color: #102a31;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.buku3d__merek-rule {
+  width: 48px;
+  height: 2px;
+  margin-top: 7px;
+  background: #d4a346;
+}
+
+.buku3d__kaki {
+  color: #8b9490;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.buku3d__tepi {
+  position: absolute;
+  top: 4px;
+  right: -8px;
+  width: 9px;
+  height: calc(100% - 8px);
+  background: repeating-linear-gradient(
+    90deg,
+    #f7f2e2 0 1px, #ddd5c0 1px 2px, #f7f2e2 2px 3px
+  );
+  transform: skewY(-1deg);
+}
+
+.buku3d__catatan {
+  position: absolute;
+  z-index: 4;
+  right: -6px;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  border: 1px solid rgba(16, 42, 49, 0.08);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 30px rgba(16, 42, 49, 0.1);
+  text-align: left;
+}
+
+.buku3d__catatan-ikon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 9px;
+  background: #edf5f1;
+  color: #34746c;
+}
+
+.buku3d__catatan strong,
+.buku3d__catatan small { display: block; }
+
+.buku3d__catatan strong {
+  color: #243b3d;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.buku3d__catatan small {
+  margin-top: 2px;
+  color: #87918d;
+  font-size: 9px;
+}
+
+/* --- DUA slot logo tampil bersamaan di tengah sampul -------------------- */
+
+.buku-slot-area {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 0;
+}
+
+/* Arahan klien: dua logo disusun ATAS–BAWAH, bukan kiri–kanan.
+   Slot dibuat lebih lebar supaya wordmark (mis. Scopus) tetap terbaca. */
+.buku-slot-pasangan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+}
+
+.buku-slot-kolom {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.buku-slot__nama {
+  max-width: 100%;
+  overflow: hidden;
+  color: #b8751c;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  animation: buku-logo-muncul 0.35s ease-out both;
+}
+
+.buku-slot {
+  display: grid;
+  width: 100%;
+  max-width: 146px;
+  height: 74px;
+  place-items: center;
+  border: 1px solid rgba(9, 103, 125, 0.32);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.buku-slot--kosong { border-style: dashed; }
+
+.buku-slot__gambar {
+  max-width: 106px;
+  max-height: 56px;
+  object-fit: contain;
+  animation: buku-logo-muncul 0.35s ease-out both;
+}
+
+.buku-slot__kosong {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #95a3a1;
+  font-size: 9.5px;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.buku-slot__titik { display: flex; gap: 5px; }
+
+.buku-slot__titik i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(16, 42, 49, 0.18);
+}
+
+.buku-slot__titik i.is-aktif { background: #09677d; }
+
+@keyframes buku-logo-muncul {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- Responsif & aksesibilitas gerak ----------------------------------- */
+
+@media (max-width: 1000px) {
+  .hero-buku { height: 322px; }
+  .hero-buku .buku3d { transform: scale(0.8); }
+}
+
+@media (max-width: 640px) {
+  .home-hero--foto .hero-copy { padding-top: 10px; }
+  .hero-buku { height: 286px; }
+  .hero-buku .buku3d { transform: scale(0.7); }
+}
+
+@media (max-width: 390px) {
+  .hero-buku { height: 260px; }
+  .hero-buku .buku3d { transform: scale(0.64); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-buku,
+  .buku-slot__gambar,
+  .buku-slot__nama { animation: none; }
+}
+
+@media print {
+  .hero-buku { display: none; }
+}
+
+/* ==========================================================================
+   SECTION 3 — Visual hero berbasis foto (brief §3.1 / §3.2)
+   Gaya FADE-IN sesuai referensi klien: foto tidak lagi berbingkai/kartu,
+   melainkan menyatu ke latar lewat gradient mask di sisinya. Kiri = teks,
+   kanan = gambar. Ketiga foto juga masuk perlahan saat halaman dimuat.
+   ========================================================================== */
+
+@keyframes sec3-foto-masuk {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* — 3.1 Hero /publish-buku: teks kiri, foto kanan, fade dari kiri — */
+.publish-hero-art--foto { position: absolute; inset: 0 0 0 auto; width: 62%; min-height: 0; z-index: 1; pointer-events: none; }
+.publish-hero-foto { display: block; width: 100%; height: 100%; max-width: none; aspect-ratio: auto; object-fit: cover; object-position: 75% center; border: 0; border-radius: 0; box-shadow: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.14) 9%, rgba(0,0,0,.68) 24%, #000 40%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.14) 9%, rgba(0,0,0,.68) 24%, #000 40%); }
+.publish-hero-foto-catatan { position: absolute; right: 14px; bottom: 12px; max-width: 320px; margin: 0; padding: 6px 10px; border-radius: 8px; background: rgba(16, 42, 49, .6); color: #f4f8f5; font-size: 8.5px; letter-spacing: .03em; text-align: right; pointer-events: auto; }
+.publish-hero-art--foto .publish-art-glow,
+.publish-hero-art--foto .publish-sheet,
+.publish-hero-art--foto .art-spark,
+.publish-hero-art--foto .art-label { display: none; }
+
+/* — 3.2 Asistensi: teks + form kiri, foto panorama besar di kanan — */
+.assist-section--foto { grid-template-columns: minmax(300px, 0.75fr) minmax(0, 1.25fr); grid-template-areas: "copy media" "form media"; align-items: start; gap: 22px 28px; padding-right: 0; overflow: hidden; }
+.assist-section--foto .assist-copy { grid-area: copy; }
+.assist-section--foto .assist-form-card { grid-area: form; align-self: start; }
+.assist-section--foto .assist-media { grid-area: media; align-self: center; }
+.assist-media { position: relative; display: grid; width: 100%; height: 330px; min-height: 0; overflow: visible; border: 0; border-radius: 0; background: transparent; align-items: center; }
+/* Kolom kanan diperlebar supaya foto panorama tampil besar tanpa memotong
+   balon teks. Fade hanya menyamping (horizontal), tanpa fade atas/bawah. */
+.assist-foto { display: block; width: 100%; height: auto; min-height: 0; max-height: none; aspect-ratio: 963 / 423; object-fit: cover; object-position: center; border-radius: 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 97%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 97%, transparent 100%); }
+
+/* — 3.2 Hero /publish-jurnal: foto dosen + 3 gambar bukti korespondensi — */
+.journal-hero-visual--foto { position: relative; display: grid; min-height: 440px; place-items: center; }
+.journal-hero-visual--foto .journal-visual-ring { display: none; }
+.journal-hero-foto { display: block; width: min(100%, 440px); height: auto; aspect-ratio: 3 / 2; object-fit: cover; border: 1px solid rgba(255, 255, 255, .24); border-radius: 20px; box-shadow: 0 28px 56px rgba(0, 0, 0, .36); }
+.journal-hero .journal-hero-description { max-width: 340px; }
+.journal-visual-caption--foto { position: absolute; right: 0; bottom: -16px; left: 0; color: #a9c3bb; font-size: 7.5px; letter-spacing: .1em; text-align: center; }
+.bukti-float { position: absolute; z-index: 3; }
+/* Sudut gambar bukti dibuat rounded; rasio tetap agar isi tidak tercrop. */
+.bukti-image { display: block; box-sizing: border-box; width: 100%; height: auto; object-fit: contain; border: 1px solid rgba(255, 255, 255, .65); border-radius: 16px; background: #fff; box-shadow: 0 16px 36px rgba(5, 25, 30, .3); }
+.bukti-float--email { top: -1%; right: -4%; width: 180px; transform: rotate(2deg); }
+.bukti-float--timeline { bottom: 7%; left: -4%; width: 182px; transform: rotate(-2deg); }
+.bukti-float--ojs { right: -3%; bottom: -1%; width: 180px; transform: rotate(1.5deg); }
+
+/* — Kartu mockup (Gmail / Timeline SINTA 2 / OJS) — */
+.bukti-card { padding: 10px 11px; border: 1px solid rgba(16, 42, 49, .1); border-radius: 12px; background: #fff; box-shadow: 0 16px 36px rgba(5, 25, 30, .3); color: #1d3439; }
+.bukti-card__kepala { display: flex; align-items: center; gap: 7px; padding-bottom: 7px; border-bottom: 1px solid #e8eeea; color: #5c706c; font-size: 9px; }
+.bukti-card__kepala strong { color: #17333a; font-size: 10px; font-weight: 700; }
+.bukti-card__kepala > :last-child { margin-left: auto; }
+.bukti-gmail-mark { display: grid; width: 18px; height: 18px; place-items: center; border-radius: 5px; background: #ea4335; color: #fff; }
+.bukti-email { padding: 8px 0 1px; }
+.bukti-email__pengirim { display: flex; align-items: center; gap: 4px; color: #6b7d78; font-size: 8.5px; }
+.bukti-email p { margin: 5px 0 0; color: #20393d; font-size: 9.5px; font-weight: 600; line-height: 1.45; }
+.bukti-card__catatan { margin: 8px 0 0; color: #8a9892; font-size: 7.5px; letter-spacing: .03em; text-transform: uppercase; }
+.bukti-timeline { display: grid; gap: 5px; margin: 8px 0 0; padding: 0; list-style: none; }
+.bukti-timeline li { display: grid; grid-template-columns: 14px 10px 1fr; align-items: center; gap: 6px; color: #2b4448; font-size: 9px; }
+.bukti-timeline__tanggal { color: #a6b2ac; font-size: 8px; }
+.bukti-timeline__titik { display: grid; width: 9px; height: 9px; place-items: center; border: 1px solid #a7bbb2; border-radius: 50%; background: #dfeae4; color: #fff; }
+.bukti-timeline li:last-child .bukti-timeline__titik { border-color: #2f7d67; background: #2f7d67; }
+.bukti-card__kepala--ojs { padding: 0 0 7px; border: 0; }
+.bukti-ojs-dot { width: 8px; height: 8px; border-radius: 50%; background: #c2cc08; }
+.bukti-ojs-body { display: grid; gap: 5px; padding: 8px; border-radius: 8px; background: #f4f8f5; }
+.bukti-ojs-body p { margin: 0; color: #2b4448; font-size: 9px; line-height: 1.4; }
+.bukti-ojs-workflow { display: inline-block; justify-self: start; margin-top: 3px; padding: 4px 7px; border-radius: 5px; background: #09677d; color: #fff; font-size: 8px; font-weight: 650; }
+
+/* Fade-in saat masuk: tetap halus, dan diam untuk reduced-motion. */
+.publish-hero-foto, .assist-foto, .journal-hero-foto { animation: sec3-foto-masuk .85s cubic-bezier(.2, .7, .25, 1) both; }
+
+@media (max-width: 800px) {
+  .publish-hero-art--foto { position: relative; inset: auto; width: 100%; height: 270px; margin: 18px 0 0; z-index: 1; }
+  .publish-hero-foto { object-position: center 30%;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.45) 14%, #000 40%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.45) 14%, #000 40%); }
+  .publish-hero-foto-catatan { right: 10px; bottom: 8px; font-size: 8px; }
+  .assist-section--foto { gap: 20px; padding-right: 4%; }
+  .assist-media { height: 215px; }
+}
+@media (max-width: 600px) {
+  .assist-section--foto { grid-template-columns: 1fr; grid-template-areas: "copy" "media" "form"; gap: 18px; padding-right: 20px; }
+  .assist-media { height: auto; }
+}
+@media (max-width: 820px) {
+  .journal-hero-visual--foto { min-height: 0; display: flex; flex-direction: column; gap: 12px; padding: 26px 0 6px; }
+  .journal-hero-foto { width: 100%; max-width: 420px; }
+  .bukti-float { position: static; width: 100%; max-width: 420px; transform: none; }
+  .bukti-float--email, .bukti-float--timeline, .bukti-float--ojs { top: auto; right: auto; bottom: auto; left: auto; }
+  .journal-visual-caption--foto { position: static; margin: 4px 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bukti-float { transform: none; }
+  .publish-hero-foto, .assist-foto, .journal-hero-foto { animation: none; }
+}
+
+/* ==========================================================================
+   SECTION 4–7 — fade-in hero jurnal, logo resmi kategori, banner sub-halaman,
+   spesifikasi buku, dan hero Tentang Kami.
+   Semua aturan di sini sengaja meng-override app/globals.css (dimuat setelah).
+   ========================================================================== */
+
+/* — Hero /publish-jurnal: foto dosen full-bleed, fade ke latar teal — */
+.journal-hero-visual--foto { position: absolute; inset: 0 0 0 auto; width: 60%; min-height: 0; z-index: 1; }
+.journal-hero-foto { width: 100%; height: 100%; max-width: none; aspect-ratio: auto; object-fit: cover; object-position: 62% center; border: 0; border-radius: 0; box-shadow: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.1) 8%, rgba(0,0,0,.62) 24%, #000 42%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.1) 8%, rgba(0,0,0,.62) 24%, #000 42%); }
+.bukti-float--email { top: 3%; right: 2%; width: 170px; }
+.bukti-float--timeline { bottom: 10%; left: 8%; width: 174px; }
+.bukti-float--ojs { right: 2%; bottom: 10%; width: 170px; }
+.journal-visual-caption--foto { position: absolute; right: auto; bottom: 6px; left: 50%; max-width: 46%; padding: 5px 9px; border-radius: 8px; background: rgba(9, 33, 38, .58); color: #d7e7df; font-size: 7px; text-align: center; transform: translateX(-50%); }
+
+/* — §4.3 Kartu kategori modern + LOGO RESMI — */
+.journal-category-card { min-height: 366px; }
+.category-logo { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 15px; padding: 11px 12px 9px; border: 1px solid #e4ece5; border-radius: 12px; background: rgba(255, 255, 255, .94); }
+.category-logo__baris { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; width: 100%; }
+.category-logo__img { display: block; width: auto; max-width: 100%; height: auto; max-height: 42px; object-fit: contain; }
+.category-logo__img--lebar { max-height: 38px; }
+.category-logo__badges { display: flex; flex-wrap: wrap; gap: 4px; margin-left: auto; }
+.sinta-rank { display: grid; min-width: 30px; height: 26px; padding: 0 6px; place-items: center; border-radius: 7px; color: #fff; font-size: 10px; font-weight: 750; letter-spacing: .02em; box-shadow: 0 2px 6px rgba(16, 42, 49, .12); }
+.sinta-rank--s1 { background: #e8752a; }
+.sinta-rank--s2 { background: #3f9d55; }
+.sinta-rank--s3 { background: #2b74b8; }
+.sinta-rank--s4 { background: #e3b528; }
+.category-logo__tag { margin-left: auto; color: #8b9a91; font-size: 7px; font-weight: 750; letter-spacing: .14em; white-space: nowrap; }
+.category-logo--ringkas { margin-top: 9px; padding: 8px 9px; gap: 6px; }
+.category-logo--ringkas .category-logo__img { max-height: 26px; }
+.category-logo--ringkas .sinta-rank { min-width: 25px; height: 21px; font-size: 8px; }
+.category-logo--ringkas .category-logo__tag { font-size: 6px; }
+.journal-assist-category > div { min-width: 0; }
+.journal-assist-category .category-logo { margin-top: 10px; }
+
+/* — §5 Banner hero sub-halaman jurnal (teks kiri, foto kanan, fade-in) — */
+.journal-flow-hero--banner { min-height: 400px; }
+.journal-flow-hero--banner > *:not(.journal-flow-banner) { position: relative; z-index: 1; }
+.journal-flow-hero--banner h1,
+.journal-flow-hero--banner .journal-hero-description,
+.journal-flow-hero--banner .journal-flow-meta { max-width: 52%; }
+.journal-flow-banner { position: absolute; inset: 0 0 0 auto; width: 56%; z-index: 0; pointer-events: none; }
+.journal-flow-banner img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 68% center;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.1) 8%, rgba(0,0,0,.6) 24%, #000 44%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.1) 8%, rgba(0,0,0,.6) 24%, #000 44%); }
+.journal-flow-banner img, .about-hero-banner img { animation: sec3-foto-masuk .85s cubic-bezier(.2, .7, .25, 1) both; }
+
+/* — §6.1 Spesifikasi buku — */
+.detail-specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+.detail-specs .detail-fact { background: #fff; }
+.detail-specs-note { margin: 9px 0 0; color: #8a9892; font-size: 9px; line-height: 1.6; }
+
+/* — §6.2 Badge besar SEGERA TERBIT — */
+.detail-coming-badge { margin-top: 26px; overflow: hidden; border: 1px solid #ecd69a; border-radius: 18px; background: linear-gradient(155deg, #fffdf5, #fff7e3); box-shadow: 0 16px 38px rgba(172, 128, 34, .12); }
+.detail-coming-badge__header { display: flex; align-items: center; gap: 10px; padding: 13px 20px; background: linear-gradient(100deg, #c8912c, #e0b44c); color: #fff; }
+.detail-coming-badge__header h2 { margin: 0; color: #fff; font-size: 13px; font-weight: 800; letter-spacing: .17em; }
+.detail-coming-badge__dot { width: 9px; height: 9px; border: 2px solid #fff; border-radius: 50%; }
+.detail-coming-badge__body { display: flex; align-items: center; gap: 20px; padding: 22px 24px 25px; }
+.detail-coming-badge__jam { flex: 0 0 auto; color: #d8a637; }
+.detail-coming-badge__body p { margin: 0; color: #5d5541; font-size: 13px; font-weight: 550; line-height: 1.7; }
+
+/* — §7.1 Hero Tentang Kami — teks tengah, lede lebih besar, tanpa pill — */
+.about-hero--baru { grid-template-columns: 1fr; min-height: 0; gap: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; }
+.about-hero--baru .about-hero-copy { max-width: 960px; margin-inline: auto; padding: 0 7% 32px; text-align: center; }
+.about-hero--baru .about-eyebrow { justify-content: center; }
+.about-hero--baru h1 { max-width: 820px; margin-inline: auto; }
+.about-hero--baru .about-hero-lede { max-width: 760px; margin: 20px auto 0; font-size: clamp(16px, 1.6vw, 19px); line-height: 1.75; }
+.about-hero--baru .about-hero-actions { justify-content: center; margin-top: 28px; }
+.about-hero--baru .about-hero-copy > .skeleton-line { margin-inline: auto; }
+.about-button-outline { border: 1px solid #bdcfc4; background: rgba(255, 255, 255, .7); color: #12383a; }
+.about-button-outline:hover { background: #fff; }
+.about-hero-banner { position: relative; width: 100%; height: 300px; margin-top: 4px; overflow: hidden; border-radius: 0; }
+.about-hero-banner img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 46%;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.55) 12%, #000 34%);
+  mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.55) 12%, #000 34%); }
+.about-hero-banner__catatan { position: absolute; right: 12px; bottom: 10px; padding: 5px 9px; border-radius: 8px; background: rgba(16, 42, 49, .6); color: #f4f8f5; font-size: 8px; letter-spacing: .03em; }
+
+@media (max-width: 820px) {
+  .journal-hero-visual--foto { position: relative; inset: auto; width: 100%; min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: 12px; padding: 26px 0 6px; z-index: 1; }
+  .journal-hero-foto { height: 240px; aspect-ratio: auto; object-position: 62% 32%;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.5) 14%, #000 40%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.5) 14%, #000 40%); }
+  .bukti-float { position: static; width: 100%; max-width: 420px; transform: none; }
+  .bukti-float--email, .bukti-float--timeline, .bukti-float--ojs { top: auto; right: auto; bottom: auto; left: auto; }
+  .journal-visual-caption--foto { position: static; max-width: 100%; margin: 4px 0 0; transform: none; }
+}
+@media (max-width: 800px) {
+  .journal-category-grid { grid-template-columns: 1fr; }
+  .journal-category-card { min-height: 0; }
+  .journal-flow-hero--banner { min-height: 0; }
+  .journal-flow-hero--banner h1,
+  .journal-flow-hero--banner .journal-hero-description,
+  .journal-flow-hero--banner .journal-flow-meta { max-width: 100%; }
+  .journal-flow-banner { position: relative; inset: auto; width: 100%; height: 210px; margin-top: 22px; }
+  .journal-flow-banner img { object-position: 68% 30%;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.5) 14%, #000 40%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.5) 14%, #000 40%); }
+  .about-hero-banner { height: 230px; }
+}
+@media (max-width: 600px) {
+  .detail-specs { grid-template-columns: 1fr; }
+  .detail-coming-badge__body { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px; }
+  .detail-coming-badge__jam { width: 52px; height: 52px; }
+  .about-hero-banner { height: 190px; }
+  .category-logo__badges { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journal-flow-banner img, .about-hero-banner img { animation: none; }
+}
+
+/* ==========================================================================
+   PRINSIP PUBLIKASI CMM — pengganti "Bukan janji besar"
+   --------------------------------------------------------------------------
+   Disamakan dengan referensi klien (image-1): teks kartu rata atas, foto
+   mengisi sisi kanan kartu, judul satu baris + baris italic. Warna & berat
+   huruf mengikuti section lain: teks #102a31/#17343a, isi #64776f,
+   aksen #527e72, judul weight 600, judul kartu 650.
+   ========================================================================== */
+
+.home-prinsip {
+  max-width: 1400px;
+  padding-inline: 24px;
+  scroll-margin-top: 100px;
+  padding-top: 72px;
+  padding-bottom: 92px;
+}
+
+.prinsip-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 24px 48px;
+  margin-bottom: 42px;
+}
+
+.prinsip-kicker {
+  margin-bottom: 0;
+  color: #67837b;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.prinsip-kicker::before {
+  width: 24px;
+  height: 2px;
+  background: #b18a39;
+}
+
+.prinsip-title {
+  margin: 20px 0 0;
+  color: #102a31;
+  font-size: clamp(30px, 3.2vw, 46px);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 1.16;
+}
+
+.prinsip-title em {
+  display: block;
+  color: #527e72;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.prinsip-intro {
+  max-width: 440px;
+  margin: 0;
+  justify-self: end;
+  color: #5f736b;
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.55;
+}
+
+.prinsip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.prinsip-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 38%;
+  gap: 20px;
+  min-height: 210px;
+  padding: 20px;
+  border: 1px solid #e0e6df;
+  border-radius: 16px;
+  background: #fcfcfc;
+}
+
+.prinsip-card:nth-child(2),
+.prinsip-card:nth-child(3) {
+  background: #f3f8f2;
+}
+
+/* Teks rata atas seperti referensi, bukan rata tengah. */
+.prinsip-copy {
+  align-self: start;
+  padding: 12px 8px 12px 14px;
+}
+
+.prinsip-no {
+  color: #527e72;
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 550;
+  line-height: 1;
+}
+
+.prinsip-card h3 {
+  margin: 18px 0 0;
+  color: #17343a;
+  font-size: clamp(21px, 1.75vw, 25px);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.22;
+}
+
+.prinsip-card p {
+  margin: 12px 0 0;
+  color: #64776f;
+  font-size: 17px;
+  line-height: 1.48;
+}
+
+/* Foto mengisi tinggi kartu dengan inset sama seperti padding kartu. */
+.prinsip-foto {
+  width: 100%;
+  height: 100%;
+  min-height: 170px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.home-skeleton-prinsip .prinsip-card {
+  min-height: 210px;
+}
+
+@media (max-width: 1100px) {
+  .prinsip-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .prinsip-card {
+    grid-template-columns: minmax(0, 1fr) 34%;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-prinsip {
+    max-width: none;
+    padding-inline: 16px;
+  }
+}
+
+@media (max-width: 860px) {
+  .prinsip-head {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 18px;
+  }
+
+  .prinsip-intro {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 700px) {
+  .home-prinsip {
+    padding-inline: 10px;
+    padding-top: 52px;
+    padding-bottom: 64px;
+  }
+
+  .prinsip-card {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    padding: 18px;
+  }
+
+  .prinsip-copy {
+    padding: 4px 4px 0;
+  }
+
+  .prinsip-foto {
+    height: 200px;
+    min-height: 0;
+  }
+}
+
+@media print {
+  .home-prinsip {
+    padding-block: 24px;
+  }
+}
+
+/* ==========================================================================
+   Publish Jurnal — Keunggulan Kami + video proses publikasi
+   Menggantikan section “Ruang untuk bukti publikasi” mengikuti referensi
+   klien: judul rata kiri, tiga kartu sejajar, lalu poster video selebar kartu.
+   ========================================================================== */
+
+.journal-advantages-section {
+  padding: 72px 4% 0;
+}
+
+.journal-advantages-head {
+  max-width: 720px;
+}
+
+.journal-advantages-head h2 {
+  margin-top: 12px;
+  color: #143540;
+  font-size: clamp(28px, 3.5vw, 38px);
+  font-weight: 620;
+  line-height: 1.14;
+  letter-spacing: -0.045em;
+}
+
+.journal-advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.journal-advantage-card {
+  min-width: 0;
+  min-height: 224px;
+  padding: 22px;
+  border: 1px solid #dfe8e1;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(247, 250, 247, 0.72));
+}
+
+.journal-advantage-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid #dce8df;
+  border-radius: 12px;
+  background: #eef5ef;
+  color: #3f786a;
+}
+
+.journal-advantage-number {
+  display: block;
+  margin-top: 17px;
+  color: #3f786a;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+.journal-advantage-card h3 {
+  margin-top: 6px;
+  color: #173a44;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+}
+
+.journal-advantage-card p {
+  margin-top: 10px;
+  color: #64776f;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.journal-video {
+  position: relative;
+  height: clamp(220px, 27vw, 300px);
+  margin: 30px 0 0;
+  overflow: hidden;
+  border: 1px solid #dfe8e1;
+  border-radius: 16px;
+  background: #eef3ee;
+}
+
+.journal-video-poster {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+}
+
+.journal-video::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(16, 42, 49, 0.06), transparent 38%, rgba(16, 42, 49, 0.08));
+}
+
+.journal-video-chip {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  padding: 0 13px;
+  border-radius: 999px;
+  background: rgba(244, 248, 242, 0.9);
+  color: #355e52;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+}
+
+.journal-video-chip--left {
+  left: 16px;
+}
+
+.journal-video-chip--right {
+  right: 16px;
+}
+
+.journal-video-mark {
+  position: absolute;
+  z-index: 2;
+  top: 21%;
+  left: 68%;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 4px solid #253c3d;
+  border-radius: 50%;
+  background: #ef2b91;
+  box-shadow: 0 8px 18px rgba(16, 42, 49, 0.2);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 750;
+}
+
+.journal-video-play {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 26px rgba(16, 42, 49, 0.18);
+  color: #173a44;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.journal-video-play svg {
+  margin-left: 3px;
+  fill: currentColor;
+}
+
+.journal-video-play:hover {
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(16, 42, 49, 0.26);
+}
+
+.journal-video-play:focus-visible {
+  outline: 3px solid #c2cc08;
+  outline-offset: 4px;
+}
+
+.journal-video--skeleton {
+  display: grid;
+  place-items: stretch;
+}
+
+@media (max-width: 820px) {
+  .journal-advantages-section {
+    padding: 56px 1% 0;
+  }
+
+  .journal-advantages-grid {
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .journal-advantage-card {
+    min-height: 0;
+    padding: 18px;
+  }
+
+  .journal-video {
+    height: 240px;
+    margin-top: 22px;
+  }
+}
+
+@media (max-width: 600px) {
+  .journal-advantages-section {
+    padding-top: 46px;
+  }
+
+  .journal-advantages-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .journal-advantage-card h3 {
+    font-size: 15px;
+  }
+
+  .journal-video {
+    height: 210px;
+    border-radius: 14px;
+  }
+
+  .journal-video-chip {
+    top: 12px;
+    min-height: 25px;
+    padding: 0 10px;
+    font-size: 7px;
+    letter-spacing: 0.06em;
+  }
+
+  .journal-video-chip--left {
+    left: 12px;
+  }
+
+  .journal-video-chip--right {
+    right: 12px;
+  }
+
+  .journal-video-mark {
+    top: 24%;
+    left: 70%;
+    width: 36px;
+    height: 36px;
+    border-width: 3px;
+    font-size: 16px;
+  }
+
+  .journal-video-play {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journal-video-play {
+    transition: none;
+  }
+}
+
+/* — Tentang Kami · 01 / LEGALITAS (menggantikan narasi profil lama) — */
+.about-legalitas { padding: 76px 0 0; }
+.about-legalitas-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: clamp(28px, 4vw, 56px); align-items: center; }
+.about-legalitas .about-kicker { color: #24454b; font-size: 12px; letter-spacing: .18em; }
+.about-legalitas h2 { margin-top: 22px; color: #102f36; font-size: clamp(40px, 4.8vw, 64px); font-weight: 620; line-height: 1.04; letter-spacing: -.055em; }
+.about-legalitas h2 em { color: #41766a; font-family: Georgia, serif; font-weight: 400; }
+.about-legalitas-lede { max-width: 560px; margin-top: 26px; color: #33474f; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.65; }
+.about-legalitas-badges { display: flex; flex-wrap: wrap; gap: 14px; margin: 38px 0 0; padding: 0; list-style: none; }
+.about-legalitas-badges li { display: inline-flex; align-items: center; gap: 10px; min-height: 54px; padding: 0 16px; border: 1px solid #dfe5df; border-radius: 12px; background: rgba(255, 255, 255, .72); color: #33474f; font-size: 13px; font-weight: 500; }
+.about-legalitas-badges svg { flex: 0 0 auto; color: #2e7d64; }
+.about-legalitas-visual { padding: clamp(24px, 3.4vw, 48px) clamp(20px, 3vw, 44px) 28px; border-radius: 32px; background: #edf1ee; }
+.about-legalitas-docs { position: relative; height: clamp(300px, 30vw, 440px); }
+.about-legal-paper, .about-legal-card { position: absolute; display: block; height: auto; object-fit: contain; border-radius: 14px; box-shadow: 0 18px 40px rgba(16, 42, 49, .16); }
+.about-legal-paper { top: 0; left: 4%; width: 56%; background: #fff; }
+.about-legal-card { right: 0; bottom: 4%; width: 54%; }
+.about-legalitas-captions { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; color: #33474f; font-size: 15px; text-align: center; }
+.about-legalitas-captions span::after { content: ""; display: block; width: 42px; height: 2px; margin: 10px auto 0; background: #b8862b; }
+.about-legalitas-note { display: flex; align-items: center; gap: 18px; margin-top: 46px; padding: 22px 28px; border: 1px solid #e3e8e2; border-radius: 16px; background: #f7f8f6; color: #24454b; }
+.about-legalitas-note svg { flex: 0 0 auto; color: #b8862b; }
+.about-legalitas-note-divider { flex: 0 0 1px; width: 1px; height: 28px; background: #d8c49a; }
+.about-legalitas-note p { font-size: clamp(14px, 1.35vw, 18px); line-height: 1.5; }
+
+@media (max-width: 900px) {
+  .about-legalitas { padding-top: 60px; }
+  .about-legalitas-grid { grid-template-columns: 1fr; gap: 32px; }
+  .about-legalitas-docs { height: 380px; }
+  .about-legal-paper { width: min(56%, 300px); }
+  .about-legal-card { width: min(54%, 330px); }
+  .about-legalitas-note { margin-top: 32px; }
+}
+@media (max-width: 600px) {
+  .about-legalitas { padding-top: 52px; }
+  .about-legalitas h2 { font-size: clamp(36px, 9vw, 44px); }
+  .about-legalitas-lede { font-size: 15px; }
+  .about-legalitas-badges { margin-top: 28px; }
+  .about-legalitas-badges li { justify-content: center; width: 100%; min-height: 52px; font-size: 13px; }
+  .about-legalitas-visual { padding: 20px 18px 22px; border-radius: 24px; }
+  .about-legalitas-docs { height: 300px; }
+  .about-legal-paper { left: 0; width: 60%; }
+  .about-legal-card { right: 0; bottom: 0; width: 58%; }
+  .about-legalitas-captions { font-size: 12px; }
+  .about-legalitas-note { align-items: flex-start; gap: 12px; padding: 18px; }
+  .about-legalitas-note-divider { display: none; }
+  .about-legalitas-note p { font-size: 13px; }
+}
+
+/* — Tentang Kami · 02 / TIM KAMI (menggantikan nilai kerja + perjalanan) — */
+.about-team { padding: 84px 0 76px; }
+.about-team-head { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(24px, 3vw, 48px); align-items: center; margin-bottom: 34px; }
+.about-team .about-kicker { color: #24454b; font-size: 12px; letter-spacing: .18em; }
+.about-team h2 { margin-top: 18px; color: #102f36; font-size: clamp(34px, 4vw, 54px); font-weight: 620; line-height: 1.08; letter-spacing: -.05em; }
+.about-team h2 em { color: #41766a; font-family: Georgia, serif; font-weight: 400; }
+.about-team-intro { margin: 0; padding-left: 28px; border-left: 2px solid #b8862b; color: #102f36; font-size: clamp(16px, 1.6vw, 22px); line-height: 1.5; }
+.about-team-photo { position: relative; margin: 0; overflow: hidden; border-radius: 28px; background: #e8f0e8; }
+.about-team-photo img { display: block; width: 100%; height: auto; aspect-ratio: 1584 / 672; object-fit: cover; object-position: center 38%; }
+.about-team-photo__catatan { position: absolute; top: 12px; right: 12px; padding: 5px 9px; border-radius: 8px; background: rgba(16, 42, 49, .6); color: #f4f8f5; font-size: 8px; letter-spacing: .03em; }
+.about-team-roles { position: absolute; inset-inline: 0; bottom: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 0; padding: 84px 32px 28px; background: linear-gradient(180deg, rgba(232, 240, 232, 0) 0%, rgba(232, 240, 232, .88) 34%, #e8f0e8 100%); text-align: center; }
+.about-team-role h3 { color: #102f36; font-size: clamp(16px, 1.6vw, 22px); font-weight: 700; letter-spacing: -.02em; }
+.about-team-role p { margin-top: 6px; color: #1f3a40; font-size: clamp(12px, 1.2vw, 15px); line-height: 1.45; }
+.about-team-rule { display: block; width: 56px; height: 2px; margin: 14px auto 0; background: #b8862b; }
+
+@media (max-width: 1100px) {
+  .about-legalitas-badges { gap: 10px; }
+  .about-legalitas-badges li { gap: 8px; min-height: 48px; padding: 0 12px; font-size: 12px; }
+}
+@media (max-width: 900px) {
+  .about-team { padding-top: 64px; padding-bottom: 56px; }
+  .about-team-head { grid-template-columns: 1fr; gap: 18px; margin-bottom: 26px; }
+  .about-team-intro { padding-top: 14px; padding-left: 0; border-top: 1px solid #e3e8e2; border-left: 0; }
+  .about-team-photo img { aspect-ratio: 16 / 9; object-position: center 30%; }
+  .about-team-roles { position: static; grid-template-columns: repeat(2, 1fr); gap: 18px; padding: 22px 18px; background: linear-gradient(180deg, #eef4ee, #e8f0e8); }
+}
+@media (max-width: 600px) {
+  .about-team h2 { font-size: clamp(30px, 8.4vw, 36px); }
+}
+@media (max-width: 480px) {
+  .about-team-photo { border-radius: 20px; }
+  .about-team-roles { grid-template-columns: 1fr; gap: 14px; }
+  .about-team-role h3 { font-size: 16px; }
+  .about-team-role p { font-size: 12px; }
+  .about-team-rule { margin-top: 10px; }
+}
+
+/* — Tentang Kami · 03 / HUBUNGI KAMI — badge ikon merek WhatsApp — */
+.about-contact-icon--whatsapp { background: #25d366; color: #fff; }
+.about-contact-card:hover .about-contact-icon--whatsapp { background: #1fbe5a; }
+
+/* — Tentang Kami · MEDSOS (setelah kartu ringkasan, sebelum catatan kaki) — */
+.about-medsos { padding: 15px 0 0; }
+.about-medsos-card { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(24px, 3vw, 44px); align-items: center; padding: 28px; border: 1px solid #e5ebe5; border-radius: 20px; background: #fff; }
+.about-medsos-head { display: flex; align-items: center; gap: 16px; }
+.about-medsos-icon { display: grid; flex: 0 0 56px; width: 56px; height: 56px; place-items: center; border-radius: 14px; background: #e8eede; color: #3f6b45; }
+.about-medsos .about-kicker { color: #3f6b45; font-size: 11px; font-weight: 750; letter-spacing: .16em; }
+.about-medsos h2 { margin-top: 6px; color: #102f36; font-size: clamp(26px, 2.6vw, 34px); font-weight: 700; letter-spacing: -.03em; }
+.about-medsos-desc { margin-top: 14px; color: #5c6f66; font-size: 14px; line-height: 1.6; }
+.about-medsos-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.about-medsos-item--wide { grid-column: 1 / -1; }
+.about-medsos-item a { display: flex; align-items: center; gap: 14px; min-height: 70px; padding: 12px 16px; border: 1px solid #e6e8e1; border-radius: 14px; background: #fff; text-decoration: none; transition: border-color .2s, box-shadow .2s, transform .2s; }
+.about-medsos-item a:hover { border-color: #cfdcd2; box-shadow: 0 6px 18px rgba(16, 42, 49, .07); transform: translateY(-1px); }
+.social-brand-icon { display: block; flex: 0 0 auto; border-radius: 11px; }
+.about-medsos-copy { display: grid; gap: 2px; min-width: 0; }
+.about-medsos-copy strong { color: #102f36; font-size: 15px; font-weight: 700; }
+.about-medsos-copy small { color: #5c6f66; font-size: 13px; overflow-wrap: anywhere; }
+
+@media (max-width: 900px) {
+  .about-medsos-card { grid-template-columns: 1fr; gap: 22px; padding: 24px; }
+}
+@media (max-width: 600px) {
+  .about-medsos-card { padding: 20px; border-radius: 18px; }
+  .about-medsos-grid { grid-template-columns: 1fr; gap: 10px; }
+  .about-medsos-item a { min-height: 64px; padding: 10px 14px; }
+  .about-medsos-copy strong { font-size: 14px; }
+  .about-medsos-copy small { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-medsos-item a { transition: none; }
+  .about-medsos-item a:hover { transform: none; }
+}

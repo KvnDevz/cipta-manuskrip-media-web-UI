@@ -57,8 +57,8 @@ export function JournalAdvantages() {
         <img
           className="journal-video-poster"
           src="/aset/jurnal-video-poster.jpg"
-          width={1792}
-          height={592}
+          width={1920}
+          height={1080}
           alt="Poster video proses publikasi: meja kerja dengan buku, naskah terbuka, pena, dan secangkir kopi."
           loading="lazy"
           decoding="async"
@@ -67,7 +67,6 @@ export function JournalAdvantages() {
           <Play size={11} strokeWidth={2} aria-hidden="true" /> VIDEO PROSES PUBLIKASI
         </span>
         <span className="journal-video-chip journal-video-chip--right">AUTOPLAY · MUTED</span>
-        <span className="journal-video-mark" aria-hidden="true">K</span>
         <button type="button" className="journal-video-play" aria-label="Putar video proses publikasi">
           <Play size={22} strokeWidth={2} aria-hidden="true" />
         </button>

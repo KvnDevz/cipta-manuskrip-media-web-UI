@@ -37,14 +37,13 @@ describe("BukuTigaD — dua lapis buku dari repo lama, kini di hero", () => {
     expect(html).not.toContain("buku-slot__gambar");
   });
 
-  it("dua logo tampil SEKALIGUS, bukan bergantian satu per satu", () => {
+  it("dua logo tampil SEKALIGUS tanpa tulisan label di atasnya", () => {
     const html = renderToStaticMarkup(<BukuTigaD logos={CONTOH.slice(0, 2)} />);
     expect(html).toContain('data-jumlah-logo="2"');
     expect((html.match(/class="buku-slot__gambar"/g) ?? [])).toHaveLength(2);
     expect(html).toContain('src="/logo/sinta-s1.png"');
     expect(html).toContain('src="/logo/scopus.svg"');
-    expect(html).toContain("Sinta S1");
-    expect(html).toContain("Scopus");
+    expect(html).not.toContain("buku-slot__nama");
     expect(html).not.toContain("buku-slot--kosong");
   });
 
@@ -55,41 +54,44 @@ describe("BukuTigaD — dua lapis buku dari repo lama, kini di hero", () => {
     expect(html).toContain('data-jumlah-logo="1"');
   });
 
-  it("lebih dari dua logo menampilkan pasangan awal + penanda rotasi", () => {
+  it("lebih dari dua logo menampilkan pasangan awal TANPA bullet titik halaman", () => {
     const html = renderToStaticMarkup(<BukuTigaD logos={CONTOH} />);
     expect((html.match(/class="buku-slot__gambar"/g) ?? [])).toHaveLength(2);
     expect(html).toContain('src="/logo/sinta-s1.png"');
     expect(html).toContain('src="/logo/scopus.svg"');
-    expect((html.match(/<i class=/g) ?? [])).toHaveLength(3);
-    expect((html.match(/<i class="is-aktif"/g) ?? [])).toHaveLength(1);
+    expect(html).not.toContain("buku-slot__titik");
+    expect(html).not.toContain("buku-slot__nama");
   });
 
-  it("pasangan bergeser tiap 1 detik (regresi sumber)", () => {
+  it("pasangan bergeser otomatis dengan transisi crossfade keluar-masuk", () => {
     const sumber = readFileSync(
       join(process.cwd(), "components/BookLogoRotator.tsx"),
       "utf8",
     );
-    expect(INTERVAL_LOGO_BUKU_MS).toBe(1000);
+    expect(INTERVAL_LOGO_BUKU_MS).toBeGreaterThanOrEqual(1500);
     expect(JUMLAH_SLOT_LOGO).toBe(2);
     expect(sumber).toContain("window.setInterval");
-    expect(sumber).toContain("(sekarang + 1) % jumlah");
+    expect(sumber).toContain("is-keluar");
     expect(sumber).toContain("prefers-reduced-motion");
   });
 
-  it("slot kosong TANPA tulisan 'Logo 1' / 'Logo 2' (arahan klien)", () => {
-    const html = renderToStaticMarkup(<BukuTigaD logos={[]} />);
-    expect(html).not.toMatch(/Logo\s*[12]/i);
+  it("slot logo tidak memiliki outline border dan tulisan nama logo dihapus", () => {
+    const html = renderToStaticMarkup(<BukuTigaD logos={CONTOH} />);
     expect(html).not.toContain("buku-slot__nama");
-    // Bingkai putus-putus + penanda kosong tetap ada (placeholder jujur).
-    expect((html.match(/buku-slot--kosong/g) ?? [])).toHaveLength(2);
-  });
+    expect(html).not.toContain("buku-slot__titik");
 
-  it("label dari nama berkas HANYA muncul saat slot terisi", () => {
-    const html = renderToStaticMarkup(<BukuTigaD logos={CONTOH.slice(0, 2)} />);
-    expect(html).toContain("buku-slot__nama");
-    expect(html).toContain("Sinta S1");
-    expect(html).toContain("Scopus");
-    expect(html).not.toMatch(/Logo\s*[12]/i);
+    const css = readFileSync(
+      join(process.cwd(), "app/home-sections.css"),
+      "utf8",
+    );
+    const blokSlot = css.slice(
+      css.indexOf(".buku-slot {"),
+      css.indexOf(".buku-slot--kosong {"),
+    );
+    expect(blokSlot).toContain("border: 0");
+    expect(blokSlot).toContain("background: transparent");
+    expect(css).toContain("@keyframes buku-logo-muncul");
+    expect(css).toContain("@keyframes buku-logo-keluar");
   });
 
   it("CSS: buku besar di hero dan dua slot tersusun ATAS–BAWAH", () => {

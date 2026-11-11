@@ -26,7 +26,9 @@ export default function Loading() {
             <span className="skeleton-cover" style={{ width: 200, height: 220, borderRadius: 12 }} />
           </div>
         </div>
+      </div>
 
+      <div className="home-comparison-section home-hero-skeleton" aria-hidden="true">
         <div className="hero-photo-layout hero-comparison home-skeleton-hero">
           <div className="hero-photo-card home-skeleton-card home-skeleton-card--kiri">
             <span className="skeleton-line" style={{ width: 120, height: 9 }} />
@@ -53,9 +55,9 @@ export default function Loading() {
               ))}
             </div>
           </div>
-        </div>
 
-        <span className="skeleton-pill" style={{ width: 150, height: 30 }} />
+          <span className="skeleton-pill" style={{ width: 150, height: 30, gridColumn: "1 / -1", margin: "12px auto 20px" }} />
+        </div>
       </div>
 
       <div className="logo-marquee home-skeleton-marquee" aria-hidden="true">

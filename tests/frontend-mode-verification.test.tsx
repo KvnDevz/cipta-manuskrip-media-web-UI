@@ -60,7 +60,7 @@ describe("Frontend Mode - Verifikasi Halaman Publik Tanpa Database", () => {
   it("halaman publish-buku menyajikan paket dan pratinjau katalog", async () => {
     const el = await PublishBukuPage();
     const html = renderToStaticMarkup(el);
-    expect(html).toContain("Terbit Buku Sekali Klik.");
+    expect(html).toContain("Terbit Buku Sekali Klik");
     expect(html).toContain("Paket Eksklusif");
     expect(html).toContain("Buku yang Telah Terbit");
     expect(html).toContain("Buku Segera Terbit");
@@ -69,7 +69,7 @@ describe("Frontend Mode - Verifikasi Halaman Publik Tanpa Database", () => {
 
   it("halaman publish-jurnal dan tentang-kami berhasil dirender", () => {
     const jurnalHtml = renderToStaticMarkup(PublishJurnalPage());
-    expect(jurnalHtml).toContain("Publikasi Artikel Ilmiah Sekali Klik.");
+    expect(jurnalHtml).toContain("Publikasi Artikel Ilmiah Sekali Klik");
 
     const tentangHtml = renderToStaticMarkup(TentangKamiPage());
     expect(tentangHtml).toContain("Cipta Manuskrip Media");

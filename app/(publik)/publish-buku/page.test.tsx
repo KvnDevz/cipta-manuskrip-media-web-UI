@@ -52,7 +52,7 @@ describe("publish-buku", () => {
     const el = await Page();
     const html = renderToStaticMarkup(el);
 
-    expect(html).toContain("Terbit Buku Sekali Klik.");
+    expect(html).toContain("Terbit Buku Sekali Klik");
     expect(html).toContain('href="#paket"');
     expect(html).toContain('href="#asistensi"');
     expect(html).toContain("Kirim Naskah");
@@ -171,7 +171,7 @@ describe("publish-buku", () => {
       const el = await Page();
       const html = renderToStaticMarkup(el);
 
-      expect(html).toContain("Terbit Buku Sekali Klik.");
+      expect(html).toContain("Terbit Buku Sekali Klik");
       expect(html).toContain("data-testid=\"db-error\"");
     } finally {
       process.env.DB_HOST = asliHost;

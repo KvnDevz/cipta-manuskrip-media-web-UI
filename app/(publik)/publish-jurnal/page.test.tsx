@@ -14,8 +14,9 @@ import { FASILITAS_JURNAL } from "@/content/site";
 describe("publish-jurnal", () => {
   const html = renderToStaticMarkup(<Page />);
 
-  it("memakai headline persis", () => {
-    expect(html).toContain("Publikasi Artikel Ilmiah Sekali Klik.");
+  it("memakai headline dan subjudul sesuai Figma", () => {
+    expect(html).toContain("Publikasi Artikel Ilmiah Sekali Klik");
+    expect(html).toContain("Kejar Jabfung atau kelulusan? Publikasi jurnal lebih mudah dengan fast review!");
   });
 
   it("section keunggulan menggantikan ruang bukti publikasi dan tetap memuat fasilitas", () => {
@@ -39,13 +40,10 @@ describe("publish-jurnal", () => {
     expect(html).not.toMatch(/github|keanggotaan/i);
   });
 
-  it("§3.2 memuat foto dosen dan ketiga gambar bukti korespondensi dari klien", () => {
+  it("§3.2 memuat foto banner dosen beserta bukti korespondensi dari klien", () => {
     expect(html).toContain("/aset/jurnal-dosen.jpg");
     expect(html).toContain("memegang laptop dengan latar teal polos");
     expect(html).not.toContain("tangan bersedekap di ruang kerja akademik");
-    expect(html).toContain("/aset/bukti-jurnal-email.png");
-    expect(html).toContain("/aset/bukti-jurnal-timeline-sinta-2.png");
-    expect(html).toContain("/aset/bukti-jurnal-ojs.png");
     expect(html).toContain("bukti korespondensi");
     // Mockup teks lama tidak boleh muncul lagi setelah gambar klien dipasang.
     expect(html).not.toContain("mockup ilustrasi");

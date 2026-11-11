@@ -8,10 +8,11 @@ import Home from "./page";
 describe("beranda", () => {
   const html = renderToStaticMarkup(<Home />);
 
-  it("memakai headline dan pendukung persis dari brief", () => {
+  it("memakai headline, subheadline, dan kutipan bawah hero sesuai Figma", () => {
     const visibleText = html.replace(/<[^>]*>/g, "");
-    expect(visibleText).toContain("Publikasi Semudah Beli Kopi.");
+    expect(visibleText).toContain("Penerbit Cipta Manuskrip Media");
     expect(visibleText).toContain("Layanan penerbitan buku dan publikasi artikel ilmiah.");
+    expect(visibleText).toContain("“Di Penerbit CMM, Publikasi Karya Semudah Beli Kopi”");
   });
 
   it("headline kembali ke markup asli; efek heboh tidak mengubah font", () => {
@@ -39,7 +40,8 @@ describe("beranda", () => {
     expect(html).toContain("Publish Jurnal");
   });
 
-  it("hero memakai dua alur foto dalam satu panel landscape, tanpa orbit atau buku 3D lama", () => {
+  it("hero memakai dua alur foto dalam satu panel landscape di section terpisah setelah hero buku", () => {
+    expect(html).toContain("home-comparison-section");
     expect(html).toContain("hero-photo-layout");
     expect(html).toContain("hero-comparison");
     expect(html).toContain('aria-label="Perbandingan alur beli kopi dan publikasi di CMM"');
@@ -48,6 +50,7 @@ describe("beranda", () => {
     expect(html).toContain("Publikasi di CMM");
     expect(html).toContain("/hero/kopi-pilih.jpg");
     expect(html).toContain("/hero/cmm-terbit.jpg");
+    expect(html.indexOf("buku3d__depan")).toBeLessThan(html.indexOf("home-comparison-section"));
     expect(html.indexOf("hero-comparison")).toBeLessThan(html.indexOf("hero-photo-card--kopi"));
     expect(html.indexOf("hero-comparison")).toBeLessThan(html.indexOf("hero-photo-card--cmm"));
     expect(html).not.toContain("book-scene");
@@ -68,7 +71,9 @@ describe("beranda", () => {
     expect(html).toContain("buku3d__belakang");
     expect(html).toContain("buku3d__depan");
     expect(html).toContain('data-jumlah-slot="2"');
-    expect((html.match(/buku-slot--kosong/g) ?? [])).toHaveLength(2);
+    expect((html.match(/class="buku-slot__gambar"/g) ?? [])).toHaveLength(2);
+    expect(html).not.toContain("buku-slot__nama");
+    expect(html).not.toContain("buku-slot__titik");
     // Buku sebelum marquee, dan keduanya masih di dalam hero.
     expect(html.indexOf("home-hero--foto")).toBeLessThan(html.indexOf("buku3d__depan"));
     expect(html.indexOf("buku3d__depan")).toBeLessThan(html.indexOf("logo-marquee-viewport"));

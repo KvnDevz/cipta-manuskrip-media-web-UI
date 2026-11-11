@@ -41,11 +41,13 @@ describe("TrustPillars (Section 2.2)", () => {
     );
   });
 
-  it("logo resmi masih placeholder, bukan gambar tiruan", () => {
-    expect(html).toContain("placeholder");
+  it("memakai keempat logo dan ilustrasi visual pilar sesuai Figma", () => {
+    expect(html).toContain("/aset/trust-legalitas.png");
+    expect(html).toContain("/aset/trust-perpusnas.png");
+    expect(html).toContain("/aset/trust-naskah.png");
+    expect(html).toContain("/aset/trust-distribusi.png");
     expect(html).toContain("Logo Perpusnas RI");
     expect(html).toContain("Barcode ISBN");
-    expect(html).not.toContain("<img");
     expect(html).not.toContain("home-catalog");
   });
 });

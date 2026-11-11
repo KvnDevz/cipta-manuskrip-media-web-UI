@@ -37,11 +37,11 @@ describe("content/site", () => {
     expect(TAUTAN_LAYANAN.some((t) => t.label === "Asistensi penulisan")).toBe(false);
   });
 
-  it("marquee SINTA berisi enam slot placeholder", () => {
-    expect(MARQUEE_SINTA.map((s) => s.label)).toEqual([
-      "SINTA 1", "SINTA 2", "SINTA 3", "SINTA 4", "SINTA 5", "SINTA 6",
+  it("marquee SINTA berisi daftar indeks dan pengakuan", () => {
+    expect(MARQUEE_SINTA.slice(0, 6).map((s) => s.label)).toEqual([
+      "SINTA 1", "SINTA 2", "SINTA 3", "SINTA 4", "Scimago", "Scopus",
     ]);
-    expect(new Set(MARQUEE_SINTA.map((s) => s.id)).size).toBe(6);
+    expect(new Set(MARQUEE_SINTA.map((s) => s.id)).size).toBe(MARQUEE_SINTA.length);
   });
 
   it("empat pilar kepercayaan Section 2.2 memakai teks persis brief", () => {
@@ -101,8 +101,8 @@ describe("content/site", () => {
 
   it("tepat tiga kategori jurnal dengan en dash pada SINTA", () => {
     expect(KATEGORI_JURNAL).toEqual([
-      "Jurnal Nasional Terakreditasi SINTA 1–4",
-      "Jurnal Internasional Index Copernicus",
+      "Jurnal Nasional Terakreditasi SINTA 1–4 dan GARUDA",
+      "Jurnal Internasional Index Copernicus & CrossRef",
       "Jurnal Internasional Scopus dan SCImago",
     ]);
   });

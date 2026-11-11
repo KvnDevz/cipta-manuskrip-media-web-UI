@@ -1,11 +1,10 @@
 /* eslint-disable @next/next/no-img-element -- foto lokal statis di public/aset/,
-   sudah dioptimasi ke JPEG q90; src langsung dipakai agar preview & tes visual
+   sudah dioptimasi ke JPEG; src langsung dipakai agar preview & tes visual
    tidak bergantung pada image optimizer Next (pola sama dengan HeroPhotoCard). */
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight, BadgeCheck, Eye, Fingerprint, GraduationCap, Languages, LayoutTemplate, Link2, MessagesSquare, PanelsTopLeft, PenLine, ScanSearch, ShieldCheck, Timer } from "lucide-react";
 import type { Metadata } from "next";
 import { FASILITAS_JURNAL } from "@/content/site";
-import { BuktiEmail, BuktiTimelineSinta, BuktiOjs } from "@/components/BuktiOtentik";
 import { JournalAdvantages } from "@/components/JournalAdvantages";
 
 /** Judul tab halaman layanan jurnal. */
@@ -31,17 +30,15 @@ const IKON_FASILITAS = [
   BadgeCheck,
 ] as const;
 
-
-
-/** UI editorial jurnal; seluruh konten layanan tetap mengikuti brief. */
+/** UI editorial jurnal; seluruh konten layanan tetap mengikuti desain Figma terbaru. */
 export default function Page() {
   return (
     <div className="journal-page journal-overview">
       <section className="journal-hero">
         <div className="journal-hero-copy">
           <p className="journal-kicker"><span className="journal-kicker-line" /> LAYANAN PUBLIKASI JURNAL</p>
-          <h1>Publikasi Artikel Ilmiah Sekali Klik.</h1>
-          <p className="journal-hero-description">Jelajahi fasilitas publikasi, dokumentasi, dan pilihan layanan artikel ilmiah.</p>
+          <h1>Publikasi Artikel Ilmiah Sekali Klik</h1>
+          <p className="journal-hero-description">Kejar Jabfung atau kelulusan? Publikasi jurnal lebih mudah dengan fast review!</p>
           <div className="journal-hero-actions">
             <Link href="/publish-jurnal/kirim-artikel" className="journal-button journal-button-bright">Kirim Artikel <ArrowUpRight size={17} /></Link>
             <Link href="/publish-jurnal/asistensi" className="journal-button journal-button-outline">Belum Ada Artikel <ArrowUpRight size={17} /></Link>
@@ -52,16 +49,10 @@ export default function Page() {
           <img
             className="journal-hero-foto"
             src="/aset/jurnal-dosen.jpg"
-            width={1200}
-            height={800}
-            alt="Dosen Indonesia berjas biru dongker memegang laptop dengan latar teal polos."
+            width={851}
+            height={482}
+            alt="Dosen Indonesia berjas biru dongker memegang laptop dengan latar teal polos serta bukti korespondensi email, timeline publikasi SINTA 2, dan notifikasi OJS."
           />
-          <div className="bukti-float bukti-float--email"><BuktiEmail /></div>
-          <div className="bukti-float bukti-float--timeline"><BuktiTimelineSinta /></div>
-          <div className="bukti-float bukti-float--ojs"><BuktiOjs /></div>
-          <p className="journal-visual-caption journal-visual-caption--foto">
-            NASKAH · DOKUMENTASI · PUBLIKASI — bukti korespondensi
-          </p>
         </div>
       </section>
 

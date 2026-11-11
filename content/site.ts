@@ -172,8 +172,8 @@ export const FASILITAS_JURNAL: readonly string[] = [
 
 /** Tepat tiga kategori; en dash pada `SINTA 1–4` persis dari brief. */
 export const KATEGORI_JURNAL: readonly string[] = [
-  "Jurnal Nasional Terakreditasi SINTA 1–4",
-  "Jurnal Internasional Index Copernicus",
+  "Jurnal Nasional Terakreditasi SINTA 1–4 dan GARUDA",
+  "Jurnal Internasional Index Copernicus & CrossRef",
   "Jurnal Internasional Scopus dan SCImago",
 ];
 
@@ -185,21 +185,78 @@ export const KATEGORI_JURNAL: readonly string[] = [
 export const PREVIEW_LIMIT: number = 3;
 
 /**
- * Slot logo untuk marquee di bawah hero.
- *
- * MASIH PLACEHOLDER sesuai arahan klien: logo resmi SINTA dikirim belakangan.
- * Jangan mengunduh atau menebak logo dari internet. Saat berkas resminya
- * tiba, tambahkan `src` + `alt` pada tiap entri lalu ganti bingkai
- * placeholder di `LogoMarquee` menjadi <img>; struktur marquee-nya sendiri
- * tidak perlu diubah.
+ * Slot logo indeks & pengakuan untuk marquee di bawah hero beranda.
  */
-export const MARQUEE_SINTA: ReadonlyArray<{ id: string; label: string }> = [
-  { id: "sinta-1", label: "SINTA 1" },
-  { id: "sinta-2", label: "SINTA 2" },
-  { id: "sinta-3", label: "SINTA 3" },
-  { id: "sinta-4", label: "SINTA 4" },
-  { id: "sinta-5", label: "SINTA 5" },
-  { id: "sinta-6", label: "SINTA 6" },
+export const MARQUEE_SINTA: ReadonlyArray<{
+  id: string;
+  label: string;
+  sublabel: string;
+  src: string;
+  alt: string;
+}> = [
+  {
+    id: "sinta-1",
+    label: "SINTA 1",
+    sublabel: "Jurnal Nasional Bereputasi",
+    src: "/logo/logo%20sinta%201.png",
+    alt: "Logo SINTA 1",
+  },
+  {
+    id: "sinta-2",
+    label: "SINTA 2",
+    sublabel: "Jurnal Nasional Unggulan",
+    src: "/logo/logo%20sinta%202.png",
+    alt: "Logo SINTA 2",
+  },
+  {
+    id: "sinta-3",
+    label: "SINTA 3",
+    sublabel: "Jurnal Ilmiah Terakreditasi",
+    src: "/logo/logo%20sinta%203.png",
+    alt: "Logo SINTA 3",
+  },
+  {
+    id: "sinta-4",
+    label: "SINTA 4",
+    sublabel: "Standar Akreditasi Nasional",
+    src: "/logo/sinta%204%20logo.jpg",
+    alt: "Logo SINTA 4",
+  },
+  {
+    id: "scimago",
+    label: "Scimago",
+    sublabel: "Pemeringkatan Kuartil Q1–Q4",
+    src: "/logo/logo%20schimago.png",
+    alt: "Logo Scimago",
+  },
+  {
+    id: "scopus",
+    label: "Scopus",
+    sublabel: "Indeksasi Bereputasi Global",
+    src: "/logo/logo%20scopus.webp",
+    alt: "Logo Scopus",
+  },
+  {
+    id: "copernicus",
+    label: "Copernicus",
+    sublabel: "Basis Data Internasional",
+    src: "/logo/logo%20copernicus.jpg",
+    alt: "Logo Index Copernicus",
+  },
+  {
+    id: "garuda",
+    label: "Garuda",
+    sublabel: "Garba Rujukan Digital",
+    src: "/logo/logo%20garuda.png",
+    alt: "Logo Garuda",
+  },
+  {
+    id: "crossref",
+    label: "Crossref",
+    sublabel: "Registrasi DOI Resmi",
+    src: "/logo/logo%20crossref.png",
+    alt: "Logo Crossref",
+  },
 ];
 
 /**

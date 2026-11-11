@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element -- foto lokal statis di public/aset/,
-   sudah dioptimasi ke JPEG q82; src langsung dipakai agar preview & tes visual
+   sudah dioptimasi ke JPEG; src langsung dipakai agar preview & tes visual
    tidak bergantung pada image optimizer Next (pola sama dengan HeroPhotoCard). */
 import type { Metadata } from "next";
 import { ArrowDown, ArrowUpRight, BookOpen, PenLine, ServerCrash } from "lucide-react";
@@ -19,7 +19,7 @@ import { PAKET_BUKU, PREVIEW_LIMIT } from "@/content/site";
 export const metadata: Metadata = {
   title: "Publish Buku",
   description:
-    "Layanan penerbitan buku dan pendampingan penulisan untuk membantu naskah Anda melangkah menuju publikasi, lengkap dengan ISBN.",
+    "Layanan penerbitan dan penulisan buku fiksi/nonfiksi. Sekali klik, buku terbit dan terjual.",
 };
 
 export const dynamic = "force-dynamic";
@@ -47,8 +47,11 @@ export default async function Page() {
         <div aria-hidden="true" className="publish-orb publish-orb-two" />
         <div className="publish-hero-content">
           <p className="publish-eyebrow"><BookOpen size={14} /> PENERBITAN BUKU</p>
-          <h1>Terbit Buku Sekali Klik.</h1>
-          <p className="publish-lede">Layanan penerbitan buku dan pendampingan penulisan untuk membantu naskah Anda melangkah menuju publikasi.</p>
+          <h1>Terbit Buku Sekali Klik</h1>
+          <p className="publish-lede">
+            Layanan penerbitan dan penulisan buku fiksi/nonfiksi<br />
+            Sekali klik, buku terbit dan terjual.
+          </p>
           <div className="publish-hero-actions">
             <a href="#paket" className="publish-button publish-button-primary">Kirim Naskah <ArrowUpRight size={16} /></a>
             <a href="#asistensi" className="publish-button publish-button-secondary">Asistensi Penulisan <ArrowUpRight size={16} /></a>
@@ -59,13 +62,10 @@ export default async function Page() {
           <img
             className="publish-hero-foto"
             src="/aset/buku-hero.jpg"
-            width={353}
-            height={251}
+            width={687}
+            height={492}
             alt="Penulis muda Indonesia tersenyum menunjukkan ponsel bertanda PUBLISHED, disertai ilustrasi lambang Perpustakaan Nasional dan barcode ISBN."
           />
-          <p className="publish-hero-foto-catatan">
-            Ilustrasi AI · logo &amp; ISBN resmi menyusul dari klien
-          </p>
         </div>
       </section>
 
@@ -73,10 +73,16 @@ export default async function Page() {
 
       <section id="asistensi" className="assist-section assist-section--foto scroll-mt-24">
         <div className="assist-copy">
-          <p className="publish-section-kicker">PENDAMPINGAN NASKAH</p>
-          <h2>Setiap ide layak mendapat ruang untuk tumbuh.</h2>
-          <p>Pendampingan penulisan untuk artikel dan naskah buku. Hubungi admin untuk menanyakan ruang lingkup dan jadwalnya.</p>
-          <div className="assist-note"><PenLine size={17} /><span>Mulai dengan menceritakan topik atau gagasan buku Anda.</span></div>
+          <p className="publish-section-kicker">ASISTENSI PENULISAN NASKAH BUKU</p>
+          <h2>Ketik Topik Buku, Naskah Anda Langsung Jadi</h2>
+          <p>
+            Terbit buku tapi Anda belum ada naskah? Bisa!<br />
+            Kami bantu susunkan naskah buku dan jual di website
+          </p>
+          <div className="assist-note">
+            <PenLine size={17} />
+            <span>Silakan ketik topik naskah buku yang Anda inginkan. Fiksi/nonfiksi, kami bisa.</span>
+          </div>
         </div>
         <div className="assist-media">
           <img

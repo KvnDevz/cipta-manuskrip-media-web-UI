@@ -70,8 +70,8 @@ export function PrinsipPublikasi() {
               className="prinsip-foto"
               src={item.foto}
               alt={item.alt}
-              width={318}
-              height={220}
+              width={170}
+              height={170}
               loading="lazy"
               decoding="async"
             />

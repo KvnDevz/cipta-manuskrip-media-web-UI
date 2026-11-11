@@ -13,13 +13,12 @@ import Page from "./page";
  * sendiri, jadi berkas ini tetap hijau tanpa MySQL.
  */
 describe("visual §3 publish-buku", () => {
-  it("§3.1 hero memakai foto PUBLISHED + ISBN dan teks/CTA tidak berubah", async () => {
+  it("§3.1 hero memakai foto PUBLISHED + ISBN dan teks/CTA sesuai Figma", async () => {
     const html = renderToStaticMarkup(await Page());
     expect(html).toContain("/aset/buku-hero.jpg");
-    expect(html).toContain("Terbit Buku Sekali Klik.");
-    expect(html).toContain(
-      "Layanan penerbitan buku dan pendampingan penulisan untuk membantu naskah Anda melangkah menuju publikasi.",
-    );
+    expect(html).toContain("Terbit Buku Sekali Klik");
+    expect(html).toContain("Layanan penerbitan dan penulisan buku fiksi/nonfiksi");
+    expect(html).toContain("Sekali klik, buku terbit dan terjual.");
     expect(html).toContain("Kirim Naskah");
     expect(html).toContain("Asistensi Penulisan");
     expect(html).not.toContain("publish-sheet");
@@ -30,8 +29,8 @@ describe("visual §3 publish-buku", () => {
     const html = renderToStaticMarkup(await Page());
     expect(html).toContain("assist-section--foto");
     expect(html).toContain("/aset/asistensi-buku.jpg");
-    expect(html).not.toContain("Ide Buku: Topik Utama, Detail Bab, Target Pembaca");
-    expect(html).not.toContain("assist-foto-label");
+    expect(html).toContain("ASISTENSI PENULISAN NASKAH BUKU");
+    expect(html).toContain("Ketik Topik Buku, Naskah Anda Langsung Jadi");
     expect(html).toContain("Topik Asistensi Penulisan Buku");
     // Urutan DOM: foto sebelum form, dan keduanya dalam section yang sama.
     expect(html.indexOf("assist-media")).toBeLessThan(html.indexOf("assist-form-card"));

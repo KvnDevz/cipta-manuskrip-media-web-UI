@@ -1,30 +1,18 @@
-/* eslint-disable @next/next/no-img-element -- berkas logo resmi statis di public/logo-resmi/, src langsung dipakai agar mudah ditimpa klien tanpa mengubah kode */
-import type { ReactElement } from "react";
+/* eslint-disable @next/next/no-img-element -- berkas logo resmi statis di public/logo dan public/logo-resmi/, src langsung dipakai agar mudah ditimpa klien tanpa mengubah kode */
+import type { ReactElement, ReactNode } from "react";
 
 /**
- * Logo resmi untuk tiga kategori jurnal (brief §4.3).
- *
- * Berkas di `public/logo-resmi/` adalah logo ASLI yang diunduh dari sumber
- * publik; daftar dan tautan sumbernya ada di `public/logo-resmi/README.md`.
- * Saat klien mengirim versi resmi mereka, cukup timpa berkasnya.
- *
- * Khusus SINTA: wordmark resmi ditampilkan bersama empat badge peringkat
- * S1–S4. Badge peringkat TIDAK digambar ulang sebagai seal tiruan; warnanya
- * (oranye, hijau, biru, kuning) dirender lewat CSS sesuai arahan brief,
- * karena berkas badge resmi per tingkat belum disuplai klien.
- *
- * Komponen ini dipakai di kartu `/publish-jurnal/kirim-artikel` dan daftar
- * kategori `/publish-jurnal/asistensi`. Marquee SINTA di beranda dan
- * `TrustPillars` sengaja TIDAK memakai logo ini — keduanya masih placeholder.
+ * Logo resmi untuk tiga kategori jurnal:
+ * 1. SINTA 1–4 (grid 2x2) + GARUDA
+ * 2. Index Copernicus + Crossref
+ * 3. Scopus + SJR SCImago
  */
 
-const DASAR = "/logo-resmi";
-
 export const BADGE_SINTA = [
-  { kode: "S1", warna: "oranye" },
-  { kode: "S2", warna: "hijau" },
-  { kode: "S3", warna: "biru" },
-  { kode: "S4", warna: "kuning" },
+  { kode: "S1", warna: "oranye", src: "/logo/logo%20sinta%201.png", alt: "Logo resmi SINTA 1" },
+  { kode: "S2", warna: "hijau", src: "/logo/logo%20sinta%202.png", alt: "Logo resmi SINTA 2" },
+  { kode: "S3", warna: "biru", src: "/logo/logo%20sinta%203.png", alt: "Logo resmi SINTA 3" },
+  { kode: "S4", warna: "kuning", src: "/logo/sinta%204%20logo.jpg", alt: "Logo resmi SINTA 4" },
 ] as const;
 
 function Bingkai({
@@ -34,7 +22,7 @@ function Bingkai({
 }: {
   kategori: string;
   ringkas: boolean;
-  children: ReactElement | ReactElement[];
+  children: ReactNode;
 }) {
   return (
     <div
@@ -42,7 +30,6 @@ function Bingkai({
       data-kategori={kategori}
     >
       {children}
-      <span className="category-logo__tag">LOGO RESMI</span>
     </div>
   );
 }
@@ -58,25 +45,31 @@ export function LogoKategoriJurnal({
   if (indeks === 0) {
     return (
       <Bingkai kategori="sinta" ringkas={ringkas}>
-        <div className="category-logo__baris">
-          <img
-            className="category-logo__img"
-            src={`${DASAR}/sinta.png`}
-            alt="Logo resmi SINTA, Science and Technology Index"
-            width={168}
-            height={62}
-          />
-          <span className="category-logo__badges" aria-label="Peringkat SINTA 1 sampai 4">
+        <div className="category-logo__baris category-logo__baris--sinta-garuda">
+          <div className="category-logo__sinta-grid" aria-label="Logo resmi SINTA 1 sampai 4">
             {BADGE_SINTA.map((b) => (
               <span
                 key={b.kode}
-                className={`sinta-rank sinta-rank--${b.kode.toLowerCase()}`}
+                className="category-logo__sinta-item"
                 data-warna={b.warna}
               >
-                {b.kode}
+                <img
+                  className="category-logo__sinta-img"
+                  src={b.src}
+                  alt={b.alt}
+                  width={50}
+                  height={27}
+                />
               </span>
             ))}
-          </span>
+          </div>
+          <img
+            className="category-logo__img category-logo__img--garuda"
+            src="/logo/logo%20garuda.png"
+            alt="Logo resmi GARUDA, Garba Rujukan Digital"
+            width={116}
+            height={36}
+          />
         </div>
       </Bingkai>
     );
@@ -85,35 +78,49 @@ export function LogoKategoriJurnal({
   if (indeks === 1) {
     return (
       <Bingkai kategori="ici" ringkas={ringkas}>
-        <img
-          className="category-logo__img category-logo__img--lebar"
-          src={`${DASAR}/ici.png`}
-          alt="Logo resmi Index Copernicus International, ICI World of Journals"
-          width={444}
-          height={121}
-        />
+        <div className="category-logo__baris category-logo__baris--tengah">
+          <img
+            className="category-logo__img category-logo__img--copernicus"
+            src="/logo/logo%20copernicus.jpg"
+            alt="Logo resmi Index Copernicus International"
+            width={138}
+            height={32}
+          />
+          <img
+            className="category-logo__img category-logo__img--crossref"
+            src="/logo/logo%20crossref.png"
+            alt="Logo resmi Crossref"
+            width={96}
+            height={30}
+          />
+        </div>
       </Bingkai>
     );
   }
 
   return (
     <Bingkai kategori="scopus-sjr" ringkas={ringkas}>
-      <div className="category-logo__baris">
+      <div className="category-logo__baris category-logo__baris--tengah">
         <img
           className="category-logo__img"
-          src={`${DASAR}/scopus.png`}
+          src="/logo-resmi/scopus.png"
           alt="Logo resmi Scopus"
-          width={150}
-          height={49}
+          width={114}
+          height={36}
         />
         <img
           className="category-logo__img"
-          src={`${DASAR}/sjr.png`}
+          src="/logo-resmi/sjr.png"
           alt="Logo resmi SJR, SCImago Journal & Country Rank"
-          width={150}
-          height={53}
+          width={114}
+          height={36}
         />
       </div>
+      {!ringkas ? (
+        <span className="category-logo__tag" aria-hidden="true">
+          LOGO RESMI
+        </span>
+      ) : null}
     </Bingkai>
   );
 }

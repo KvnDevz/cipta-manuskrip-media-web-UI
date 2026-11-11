@@ -1,27 +1,27 @@
-import { ImageIcon } from "lucide-react";
+/* eslint-disable @next/next/no-img-element -- logo indeks lokal di public/logo/, dimuat langsung agar mudah diganti berkasnya */
 import { MARQUEE_SINTA } from "@/content/site";
 
 /**
  * Strip marquee logo indeks, tepat di bawah hero beranda.
  *
- * Sesuai arahan klien isinya MASIH PLACEHOLDER: logo resmi SINTA akan
- * dikirim belakangan. Karena itu tiap slot sengaja memakai bingkai putus-
- * putus + ikon gambar generik, bukan lambang yang dibuat-buat, dan diberi
- * keterangan "Placeholder logo" agar tidak terbaca sebagai pengakuan resmi.
- *
- * Cara mengganti nanti: tambahkan `src`/`alt` pada entri MARQUEE_SINTA,
- * lalu tukar isi <li> di bawah menjadi <img>. Struktur dua grup (grup
- * kedua `aria-hidden`) dan animasi `cmm-marquee` tidak perlu diubah.
+ * Struktur dua grup identik (grup kedua `aria-hidden`) digeser -50%
+ * sehingga putaran berjalan mulus tanpa jeda.
  */
 export function LogoMarquee() {
   const slot = MARQUEE_SINTA.map((item) => (
     <li className="logo-marquee-item" key={item.id}>
       <span className="logo-marquee-bingkai" aria-hidden="true">
-        <ImageIcon size={19} />
+        <img
+          className="logo-marquee-gambar"
+          src={item.src}
+          alt={item.alt}
+          loading="lazy"
+          decoding="async"
+        />
       </span>
       <span className="logo-marquee-teks">
         <strong>{item.label}</strong>
-        <small>Placeholder logo</small>
+        <small>{item.sublabel}</small>
       </span>
     </li>
   ));
@@ -31,7 +31,7 @@ export function LogoMarquee() {
       <div className="logo-marquee-head">
         <h2 className="logo-marquee-judul" id="logo-marquee-judul">Indeks &amp; pengakuan</h2>
         <p className="logo-marquee-catatan">
-          Slot logo resmi SINTA · placeholder sementara
+          Jurnal nasional terakreditasi &amp; indeksasi internasional
         </p>
       </div>
 

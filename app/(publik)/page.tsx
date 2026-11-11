@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  ArrowDown,
   ArrowUpRight,
   BookOpen,
   Check,
@@ -70,8 +69,8 @@ export default function Home() {
         <div className="hero-copy relative z-10 flex flex-col items-center px-5 text-center">
           <div className="eyebrow-pill"><Sparkles size={13} /> Ruang untuk karya yang berarti</div>
           <h1 className="hero-title mt-7 text-teks">
-            Publikasi{" "}<br />
-            <span className="hero-title-line">Semudah <span className="headline-accent">Beli Kopi.</span></span>
+            Penerbit Cipta{" "}<br />
+            <span className="hero-title-line">Manuskrip <span className="headline-accent">Media</span></span>
           </h1>
           <p className="hero-description mt-5 max-w-xl text-teks-sec">
             Layanan penerbitan buku dan publikasi artikel ilmiah.
@@ -89,8 +88,13 @@ export default function Home() {
             <BukuTigaD />
           </div>
         </div>
+      </section>
 
-        {/* Dua alur disatukan dalam satu panel landscape, bukan dua kotak terpisah. */}
+      <section
+        className="home-comparison-section"
+        aria-label="Perbandingan alur beli kopi dan publikasi di CMM"
+      >
+        {/* Dua alur + kutipan bawah disatukan dalam satu panel landscape. */}
         <div
           className="hero-photo-layout hero-comparison"
           role="group"
@@ -98,9 +102,11 @@ export default function Home() {
         >
           <HeroPhotoCard varian="kopi" />
           <HeroPhotoCard varian="cmm" />
+          <p className="hero-bottom-quote">
+            “Di Penerbit CMM, Publikasi Karya Semudah{" "}
+            <span className="hero-bottom-quote-accent">Beli Kopi”</span>
+          </p>
         </div>
-
-        <Link href="#prinsip-publikasi" className="scroll-cue"><span>Jelajahi layanan</span><ArrowDown size={15} /></Link>
       </section>
 
       {/* Strip marquee indeks: placeholder sampai logo resmi SINTA dikirim. */}

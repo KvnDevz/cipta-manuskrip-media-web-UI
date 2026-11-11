@@ -1,34 +1,26 @@
-import {
-  BadgeCheck,
-  BookOpen,
-  Landmark,
-  MessageCircle,
-  PenLine,
-  Scale,
-  TabletSmartphone,
-} from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 import { PILAR_KEPERCAYAAN, type JenisVisualPilar } from "@/content/site";
 
 /**
  * "Mengapa Memilih Penerbit Cipta Manuskrip Media?"
- * Komponen lama dipakai kembali di /publish-buku, tepat setelah asistensi.
- * Beranda tetap memakai Prinsip Publikasi CMM, bukan section ini.
- *
- * Empat pilar kepercayaan dengan kartu elegan. Dua pilar pertama meminta
- * logo resmi (Kemenkumham, Perpusnas RI + barcode ISBN); berkas itu belum
- * dikirim klien, jadi tampilannya sengaja berupa bingkai PLACEHOLDER yang
- * diberi keterangan — bukan logo tiruan yang bisa terbaca sebagai bukti
- * sah. Dua pilar lain cukup memakai ikon editorial/distribusi.
- *
- * Saat aset resmi tiba: ganti `VisualLegalitas` / `VisualIsbn` menjadi
- * <img> dan hapus catatan placeholder di bawah grid.
+ * Komponen empat pilar kepercayaan di /publish-buku, tepat setelah asistensi.
  */
 function VisualPilar({ jenis }: { jenis: JenisVisualPilar }) {
   if (jenis === "legalitas") {
     return (
       <div className="trust-visual trust-visual--legalitas">
-        <span className="trust-segel" aria-hidden="true"><Scale size={26} strokeWidth={1.6} /></span>
-        <span className="trust-visual-caption">Badge Kemenkumham / Legal Seal · placeholder</span>
+        <span className="trust-logo-bulat" aria-hidden="true">
+          <img
+            src="/aset/trust-legalitas.png"
+            alt=""
+            width={78}
+            height={73}
+            className="trust-logo-img"
+          />
+        </span>
+        <span className="trust-visual-caption">
+          Badge Kemenkumham / Legal Seal
+        </span>
       </div>
     );
   }
@@ -36,9 +28,19 @@ function VisualPilar({ jenis }: { jenis: JenisVisualPilar }) {
   if (jenis === "isbn") {
     return (
       <div className="trust-visual trust-visual--isbn">
-        <span className="trust-ikon" aria-hidden="true"><Landmark size={23} strokeWidth={1.6} /></span>
+        <span className="trust-logo-bulat" aria-hidden="true">
+          <img
+            src="/aset/trust-perpusnas.png"
+            alt=""
+            width={78}
+            height={73}
+            className="trust-logo-img"
+          />
+        </span>
         <span className="trust-barcode" aria-hidden="true" />
-        <span className="trust-visual-caption">Logo Perpusnas RI &amp; Barcode ISBN · placeholder</span>
+        <span className="trust-visual-caption">
+          Logo Perpusnas RI &amp; Barcode ISBN
+        </span>
       </div>
     );
   }
@@ -46,20 +48,34 @@ function VisualPilar({ jenis }: { jenis: JenisVisualPilar }) {
   if (jenis === "naskah") {
     return (
       <div className="trust-visual trust-visual--naskah">
-        <span className="trust-ikon" aria-hidden="true"><PenLine size={23} strokeWidth={1.6} /></span>
-        <span className="trust-penghubung" aria-hidden="true" />
-        <span className="trust-ikon" aria-hidden="true"><MessageCircle size={23} strokeWidth={1.6} /></span>
-        <span className="trust-visual-caption">Ilustrasi editorial &amp; konsultasi naskah</span>
+        <img
+          src="/aset/trust-naskah.png"
+          alt=""
+          aria-hidden="true"
+          width={204}
+          height={68}
+          className="trust-ilustrasi-img"
+        />
+        <span className="trust-visual-caption">
+          Ilustrasi editorial &amp; konsultasi naskah
+        </span>
       </div>
     );
   }
 
   return (
     <div className="trust-visual trust-visual--distribusi">
-      <span className="trust-ikon" aria-hidden="true"><BookOpen size={23} strokeWidth={1.6} /></span>
-      <span className="trust-penghubung" aria-hidden="true" />
-      <span className="trust-ikon" aria-hidden="true"><TabletSmartphone size={23} strokeWidth={1.6} /></span>
-      <span className="trust-visual-caption">Buku cetak &amp; E-Book digital reader</span>
+      <img
+        src="/aset/trust-distribusi.png"
+        alt=""
+        aria-hidden="true"
+        width={202}
+        height={76}
+        className="trust-ilustrasi-img"
+      />
+      <span className="trust-visual-caption">
+        Buku cetak &amp; E-Book digital reader
+      </span>
     </div>
   );
 }
@@ -99,11 +115,6 @@ export function TrustPillars() {
           </article>
         ))}
       </div>
-
-      <p className="trust-catatan">
-        * Logo resmi Kemenkumham, Perpusnas RI, dan barcode ISBN masih berupa
-        placeholder hingga berkas aslinya dikirimkan.
-      </p>
     </section>
   );
 }

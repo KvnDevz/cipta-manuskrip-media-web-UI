@@ -1,7 +1,7 @@
 /* ==========================================================================
-   HERO COMPARISON — satu panel landscape, bukan dua kotak terpisah.
-   Latar dibuat menyatu dari nuansa kopi hangat ke teal CMM. Kolom di dalam
-   panel hanya dibedakan oleh divider lembut, tanpa bingkai/kartu sendiri.
+   HERO COMPARISON — satu panel landscape di section terpisah di bawah hero
+   buku 3D, tanpa latar belakang lebar tambahan di luar kotak. Kutipan bawah
+   berada di dalam kotak yang sama, tepat di bawah kedua kolom alur foto.
    ========================================================================== */
 
 .home-hero--foto {
@@ -9,7 +9,17 @@
   flex-direction: column;
   align-items: center;
   gap: 28px;
-  padding: 32px 20px 28px;
+  padding: 32px 20px 36px;
+}
+
+.home-comparison-section {
+  width: 100%;
+  max-width: 1168px;
+  margin: 36px auto 0;
+  padding: 0 24px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .home-hero--foto .hero-copy {
@@ -29,8 +39,10 @@
   margin-top: 0;
 }
 
-/* Satu wadah landscape untuk kedua alur. */
-.home-hero--foto .hero-photo-layout.hero-comparison {
+/* Satu wadah landscape untuk kedua alur + kutipan di bagian bawah kotak. */
+.home-hero--foto .hero-photo-layout.hero-comparison,
+.home-comparison-section .hero-photo-layout.hero-comparison,
+.hero-photo-layout.hero-comparison {
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -67,17 +79,9 @@
   z-index: 2;
 }
 
-/* Divider tengah selembut mungkin; bukan pembatas kotak. */
+/* Divider tengah hanya di antara dua kolom foto, tidak menembus kutipan bawah. */
 .hero-comparison::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(9, 103, 125, 0.16), transparent);
-  pointer-events: none;
-  z-index: 1;
+  display: none;
 }
 
 .hero-comparison > .hero-photo-card {
@@ -86,16 +90,55 @@
   display: flex;
   flex-direction: column;
   overflow: visible;
-  padding: 26px 28px 24px;
+  padding: 26px 28px 20px;
   border: 0;
   border-radius: 0;
   background: transparent;
   isolation: isolate;
 }
 
+.hero-comparison > .hero-photo-card--cmm::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 12px;
+  left: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(9, 103, 125, 0.16), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
 .hero-comparison > .hero-photo-card--kopi,
 .hero-comparison > .hero-photo-card--cmm {
   background: transparent;
+}
+
+/* Kutipan bawah di dalam kotak, membentang di bawah kedua kolom foto. */
+.home-hero--foto .hero-bottom-quote,
+.home-comparison-section .hero-bottom-quote,
+.hero-comparison > .hero-bottom-quote,
+.hero-bottom-quote {
+  grid-column: 1 / -1;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 18px 28px 26px;
+  border-top: 1px solid rgba(16, 42, 49, 0.08);
+  color: #102a31;
+  font-size: clamp(20px, 2.75vw, 32px);
+  font-weight: 750;
+  line-height: 1.22;
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+
+.home-hero--foto .hero-bottom-quote-accent,
+.home-comparison-section .hero-bottom-quote-accent,
+.hero-bottom-quote-accent {
+  color: #6c4037;
 }
 
 /* Foto latar tetap ada, tetapi dipudarkan ke arah tengah supaya menyatu
@@ -138,12 +181,16 @@
 }
 
 .home-hero-skeleton .hero-comparison > .hero-photo-card {
-  padding: 26px 28px 24px;
+  padding: 26px 28px 20px;
 }
 
 @media (max-width: 900px) {
   .hero-comparison > .hero-photo-card {
-    padding: 22px 22px 20px;
+    padding: 22px 22px 18px;
+  }
+
+  .hero-comparison > .hero-bottom-quote {
+    padding: 16px 22px 22px;
   }
 }
 
@@ -154,12 +201,19 @@
     padding: 22px 12px 20px;
   }
 
-  .home-hero--foto .hero-photo-layout.hero-comparison {
+  .home-comparison-section {
+    margin: 22px auto 0;
+    padding: 0 12px;
+  }
+
+  .home-hero--foto .hero-photo-layout.hero-comparison,
+  .home-comparison-section .hero-photo-layout.hero-comparison,
+  .hero-photo-layout.hero-comparison {
     grid-template-columns: minmax(0, 1fr);
     border-radius: 20px;
   }
 
-  .hero-comparison::after {
+  .hero-comparison > .hero-photo-card--cmm::before {
     display: none;
   }
 
@@ -169,6 +223,10 @@
 
   .hero-comparison > .hero-photo-card--cmm {
     border-top: 1px solid rgba(9, 103, 125, 0.12);
+  }
+
+  .hero-comparison > .hero-bottom-quote {
+    padding: 16px 18px 20px;
   }
 
   .hero-comparison > .hero-photo-card--kopi .hero-photo-card-latar,
@@ -181,11 +239,14 @@
 @media print {
   .hero-comparison::before,
   .hero-comparison::after,
+  .hero-comparison > .hero-photo-card--cmm::before,
   .hero-comparison .hero-photo-card-latar {
     display: none;
   }
 
-  .home-hero--foto .hero-photo-layout.hero-comparison {
+  .home-hero--foto .hero-photo-layout.hero-comparison,
+  .home-comparison-section .hero-photo-layout.hero-comparison,
+  .hero-photo-layout.hero-comparison {
     box-shadow: none;
     background: #fff;
   }

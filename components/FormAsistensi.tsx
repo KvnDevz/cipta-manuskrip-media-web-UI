@@ -72,7 +72,16 @@ export function FormAsistensi({ jenis }: { jenis: JenisAsistensi }) {
           <span className="asistensi-label-mark" aria-hidden="true">
             <Ikon size={14} strokeWidth={1.8} />
           </span>
-          {varian.label}
+          {jenis === "jurnal" ? (
+            <span className="asistensi-label-text">
+              <span className="sr-only">{varian.label} </span>
+              Isi topik penelitian untuk kami bantu asistensi penulisan artikel ilmiah.
+              <br />
+              Kuantitatif/kualitatif bisa kami bantu
+            </span>
+          ) : (
+            varian.label
+          )}
         </label>
 
         <div className={`assist-input-shell${galat ? " has-error" : ""}`}>
@@ -86,7 +95,7 @@ export function FormAsistensi({ jenis }: { jenis: JenisAsistensi }) {
             placeholder={
               jenis === "buku"
                 ? "Tuliskan topik atau gagasan buku Anda"
-                : "Tuliskan topik artikel yang ingin Anda konsultasikan"
+                : "Tuliskan topik penelitian yang Anda inginkan"
             }
             aria-describedby={`assist-hint-${varian.id}`}
             aria-invalid={galat ? true : undefined}
